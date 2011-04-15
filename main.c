@@ -1,29 +1,25 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
-#include "librobocheck.h"
+#include "lib/librobocheck.h"
 
-int main()
+int main(int argc, char **argv)
 {
-	int err_count = 0;
+	int err_count;
 	rbc_errset_t flags;
-	struct rbc_input *input = NULL;
-	struct rbc_output **output = NULL;
+	struct rbc_input * input = (struct rbc_input *)malloc(sizeof(struct rbc_input));
+
+	input->input_ptr = (struct rbc_static_input *)malloc(sizeof (struct rbc_static_input));
+	input->tool_type = STATIC_TOOL;
 
 	RESET(flags);
-
-	input = (struct rbc_input *)malloc(sizeof *input);
-	if (input != NULL) {
-		input->input_ptr = (struct rbc_static_input *)malloc(sizeof (struct rbc_static_input));
-		input->tool_type = STATIC_TOOL;
-	}
-
-	output = load_module(input, flags, &err_count, "libsplint.so", "run_tool");
-	if (output != NULL && output[0] != NULL) {
-		test_func(output[0]->err_type);
-	}
+	
+	// TODO:
+	// this should go in init
+	rbc_sys_entries[ERR_SPL_NULL_DEREF].data_type[0].xml_name = argv[argc-1];
+	
+	load_module(input, flags, &err_count, "/home/cezar/Desktop/rbc/modules/libsplint.so", "run_tool");	
 
 	return 0;
-} 
-
+}

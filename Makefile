@@ -1,31 +1,26 @@
 CC = gcc
-COMPILE_FLAGS = -Wall -g -Wextra
-LIB_FLAGS = -fPIC
+CFLAGS = -Wall -Wextra -g -c -fPIC
 SO_FLAGS = -shared
 LIBRBC_FLAGS = -ldl
 
-#** here compiled any time
-all: rbc_dependency
-	$(CC) librobocheck.o -o librobocheck.so $(LIBRBC_FLAGS) -lpenalty -L. -shared
+DIR_SRC = src
 
-rbc_dependency: libpenalty librobocheck.c
-	$(CC) $(COMPILE_FLAGS) -c librobocheck.c
+RBC_FILES = rbc_utils.c rbc_task.c librobocheck.c
+RBC_FILES_PATH = $(patsubst %,$(DIR_SRC)/%,$(RBC_FILES))
+RBC_OBJ_FILES = $(patsubst %.c,%.o,$(RBC_FILES))
 
-#** user compiles any time he wants to add new penlty functions
-#   without compiling the entire application	
-libpenalty: rbc_penalty.c
-	$(CC) $(COMPILE_FLAGS) $(LIB_FLAGS) -c $^
-	$(CC) $(SO_FLAGS) rbc_penalty.o -o libpenalty.so
 
-#** this is module specific independent from the rest of the application
-module: dependency
-	$(CC) $(SO_FLAGS) rbc_spl_parse_utils.o rbc_splint.o -o libsplint.so
-	
-dependency: rbc_spl_parse_utils.c rbc_splint.c
-	$(CC) $(COMPILE_FLAGS) $(LIB_FLAGS) -c $^
+all: make_obj
+	$(CC) $(RBC_OBJ_FILES) $(LIBRBC_FLAGS) $(SO_FLAGS) -o librobocheck.so
+	rm -f *.o *~
+make_obj:
+	$(CC) $(CFLAGS) $(RBC_FILES_PATH)
 
-#** clean-up
+test:
+	gcc -Wall main.c -o main -lrobocheck -L.
+
+
 .PHONY: clean
 
 clean:
-	rm -f *.so *.o *~
+	rm -f *.so *.o *~ main
