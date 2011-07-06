@@ -1,0 +1,22 @@
+
+#ifndef LIB_RBC_H_
+#define LIB_RBC_H_
+
+#include "static_tool.h"
+#include "dynamic_tool.h"
+
+#include "../lib/rbc_utils.h"
+
+FILE * FileLogger = NULL;
+char LoggerBuff[2 * MAX_BUFF_SIZE];
+
+void
+close_robocheck (void);
+
+int
+init_robocheck (void);
+
+struct rbc_output **
+load_module (struct rbc_input *, rbc_errset_t flags, int *err_count, char * libmodule, char *func_name);
+
+#endif

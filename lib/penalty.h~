@@ -1,0 +1,14 @@
+
+#ifndef RBC_PENALTY_H_
+#define RBC_PENALTY_H_
+
+#include "rbc_api.h"
+
+int init_penalties();
+
+void free_penalties();
+
+struct rbc_out_info *
+apply_penalty(enum EN_err_type , int );
+
+#endif

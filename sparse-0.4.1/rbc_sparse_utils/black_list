@@ -1,0 +1,13 @@
+malloc
+calloc
+realloc
+open
+fopen
+read
+fread
+write
+fwrite
+fork
+mmap
+getenv
+setenv
