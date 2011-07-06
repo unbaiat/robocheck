@@ -11,7 +11,7 @@
     <input>
       <dynamic value="./tests/complex" arg_count="0"/>
       <static file_count="1">
-        <add value="/home/iulia/Desktop/test_got/robocheck/ultimate/tests/complex_test.c"/>
+        <add value="tests/complex_test.c"/>
       </static>
     </input>
     <penalty load="true" lib_path="libpenalty.so"/>

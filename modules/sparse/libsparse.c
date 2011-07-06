@@ -31,11 +31,6 @@ run_tool(struct rbc_input *input, rbc_errset_t flags, int *err_count)
 
 		make_command(command, input, static_input);
 
-		if (chdir("sparse-0.4.1/rbc_sparse_utils/"))
-		{
-			perror ("chdir");
-			goto exit;
-		}
 		system (command);
 
 		f_in = fopen("__sparse_output", "r");
@@ -48,10 +43,6 @@ run_tool(struct rbc_input *input, rbc_errset_t flags, int *err_count)
 		output = parse_output_file(f_in, flags, static_input->file_count);
 
 		system ("rm -rf __sparse_output");
-		if (chdir("../.."))
-		{
-			perror ("chdir");
-		}
 	}
 
 exit:

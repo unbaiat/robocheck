@@ -1,7 +1,0 @@
-CPPFLAGS = `pkg-config --cflags libxslt`
-LDLIBS = `pkg-config --libs libxslt`
-
-all:
-	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o main -lrobocheck -L.
-clean:
-	rm -f main

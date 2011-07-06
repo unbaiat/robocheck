@@ -27,7 +27,7 @@ int main(){
 	pthread_mutex_t mutex_main;
 	FILE * f;
 	
-	f = fopen("test.in","rt");
+	f = fopen("tests/test.in","rt");
 	pthread_mutex_unlock(&mutex_main);
 	for (i=0;i<10;i++){
 		rc = pthread_create(&a_thread[i], NULL, thread_function, NULL);

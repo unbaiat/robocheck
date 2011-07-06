@@ -31,6 +31,8 @@ QUIET_LINK    = $(Q:@=@echo    '     LINK     '$@;)
 all: robocheck sparse
 	bash make_modules.sh build
 	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o main -lrobocheck -L.
+	ln -s sparse-0.4.1/rbc_sparse_utils/black_list
+	ln -s sparse-0.4.1/rbc_sparse_utils/static_analyzer 
 
 robocheck: make_obj configure penalty
 	$(QUIET_LINK) $(CC) $(XML_OBJ_FILES) $(RBC_OBJ_FILES) $(LIBRBC_FLAGS) $(SO_FLAGS) -o librobocheck.so
@@ -51,5 +53,5 @@ sparse:
 
 clean:
 	cd ./sparse-0.4.1; make clean
-	-rm -f *.so *.o *~ configure main
+	-rm -f *.so *.o *~ configure main static_analyzer black_list
 	bash make_modules.sh clean
