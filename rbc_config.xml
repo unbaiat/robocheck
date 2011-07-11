@@ -15,7 +15,7 @@
       </static>
     </input>
     <penalty load="true" lib_path="libpenalty.so"/>
-    <err_count value="18"/>
+    <err_count value="19"/>
   </init>
   <installed_tools count="5">
     <valgrind lib_path="./modules/valgrind/libvalgrind.so" type="dynamic">
@@ -23,11 +23,12 @@
         <add value="--trace-children=yes"/>
         <add value="--track-fds=yes"/>
       </parameters>
-      <errors err_count="4">
+      <errors err_count="5">
         <add value="2"/>
         <add value="1"/>
         <add value="3"/>
         <add value="4"/>
+        <add value="19"/>
       </errors>
       <input>
         <dynamic/>
@@ -121,7 +122,7 @@
       <add key="destroy " count="INF" value="0.1" type="float"/>
     </err_8>
     <err_9 id="9" name="Condition variable">
-      <add key="destroy " count="INF" value="0.1" type="float"/>
+      <add key="missusage of condition variables " count="INF" value="0.1" type="float"/>
     </err_9>
     <err_10 id="10" name="Hold lock">
       <add key="hold lock" count="INF" value="0.1" type="float"/>
@@ -150,5 +151,8 @@
     <err_18 id="18" name="Mixed tabs with spaces">
       <add key="Mixed tabs with spaces at the begining of each line" count="INF" value="0.2" type="float"/>
     </err_18>
+    <err_19 id="19" name="invalid free">
+      <add key="invalid memory free" count="INF" value="0.1" type="float"/>
+    </err_19>
   </errors>
 </appSettings>

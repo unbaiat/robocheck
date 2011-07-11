@@ -42,6 +42,8 @@ enum EN_err_type
 
 	ERR_MIXED_TABS,		// Mixed tabs with spaces
 
+	ERR_INVALID_FREE,		// invalid free
+
 	ERR_MAX
 };
 

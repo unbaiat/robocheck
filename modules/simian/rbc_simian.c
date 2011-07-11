@@ -9,7 +9,7 @@
  * can be adjusted.
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 27.06.2011
+ *              * last review 10.07.2011
  */
 
 #include <stdio.h>
@@ -20,7 +20,11 @@
 
 #define LINE_MAX 512
 #define MSG_SIZE 2048
-
+#define DEFAULT_CMD "java -jar ./modules/simian/simian-2.3.32.jar"
+#define OUTPUT " > output"
+#define SPACE " "
+#define OUTPUT_FILE "output"
+#define RM_OUTPUT "rm output"
 
 /*
  * print_list
@@ -60,7 +64,7 @@ print_list(struct rbc_output *list){
 
 struct rbc_output *
 run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
-	char command[LINE_MAX]="java -jar ./modules/simian/simian-2.3.32.jar";
+	char command[LINE_MAX]=DEFAULT_CMD;
 	char line[LINE_MAX],message[MSG_SIZE],*p;	
 	struct rbc_static_input *static_input = NULL;
 	struct rbc_output *output = NULL;
@@ -76,18 +80,18 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 		
 		static_input = (struct rbc_static_input *) input->input_ptr;
 		for(i=0;i<input->args_count;i++){
-			strcat(command," ");
+			strcat(command,SPACE);
 			strcat(command,input->tool_args[i]);
 		}
 		for(i=0;i<static_input->file_count;i++){
-			strcat(command," ");
+			strcat(command,SPACE);
 			strcat(command,static_input->file_names[i]);
 		}
 			
-		strcat(command," > output");
+		strcat(command,OUTPUT);
 		system(command);
 
-		f=fopen("output","rt");
+		f=fopen(OUTPUT_FILE,"rt");
 		if (f==NULL){
 			return NULL;
 		}	
@@ -135,8 +139,8 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 
 		}
 		fclose(f);
-		print_list(output);
-		system("rm output");
+		//print_list(output);
+		system(RM_OUTPUT);
 		
 	}
 

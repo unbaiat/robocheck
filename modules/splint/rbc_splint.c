@@ -22,6 +22,12 @@
 #define MSG_SIZE 2048
 #define SEPARATORS " :()\r\n\t"
 #define ASSIGN_SEPARATORS " ,:\r\n"
+#define DEFAULT_CMD "splint"
+#define OUTPUT " > output"
+#define SPACE " "
+#define OUTPUT_FILE "output"
+#define RM_OUTPUT "rm output"
+
 
 extern FILE *FileLogger;
 static char *function=NULL;
@@ -205,7 +211,7 @@ struct rbc_output *
 run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 	char line[LINE_MAX],scd_line[LINE_MAX];
 	char assignments[2*LINE_MAX];	
-	char command[LINE_MAX]="splint";
+	char command[LINE_MAX]=DEFAULT_CMD;
 	struct rbc_static_input *static_input = NULL;
 	struct rbc_output *output = NULL;
 	struct rbc_output node;
@@ -216,24 +222,23 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 	if (input != NULL  && input->input_ptr != NULL && input->tool_type == STATIC_TOOL){
 		static_input = (struct rbc_static_input *) input->input_ptr;
 		for(i=0;i<input->args_count;i++){
-			strcat(command," ");
+			strcat(command,SPACE);
 			strcat(command,input->tool_args[i]);
 		}
 
 		for(i=0;i<static_input->file_count;i++){
-			strcat(command," ");
+			strcat(command,SPACE);
 			strcat(command,static_input->file_names[i]);
 		}
 			
-		strcat(command," > output");
+		strcat(command,OUTPUT);
 		system(command);
 
-		f=fopen("output","rt");
+		f=fopen(OUTPUT_FILE,"rt");
 		if (f==NULL){
 			return NULL;
 		}	
 
-		printf ("\n\n:D\n %s\n\n",command);
 		while (fgets(line, LINE_MAX, f) != NULL){
 			if (strstr(line,"(in function")){
 				get_function(line);
@@ -280,9 +285,8 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 		}
 
 		fclose(f);
-		print_list(output);
-		system("rm output");
-		log_message ("HELLO FROM SPLINT\n", NULL);
+		//print_list(output);
+		system(RM_OUTPUT);
 	}
 
 	return output;

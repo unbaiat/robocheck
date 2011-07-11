@@ -10,7 +10,7 @@
  * none or all types of errors).
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 27.06.2011
+ *              * last review 10.07.2011
  */
 
 #include <stdio.h>
@@ -21,6 +21,11 @@
 #define LINE_MAX 512
 #define SEPARATORS " :()\r\n\t"
 #define SEPARATORS_SHARP " #:()\r\n\t"
+#define DEFAULT_CMD "valgrind --log-file=fil\%p --tool=helgrind "
+#define SPACE " "
+#define DEV_NULL " > /dev/null"
+#define LIST_OUTPUT_FILES "ls fil*"
+#define REMOVE_OUTPUT_FILES "rm fil*"
 
 /*
  * is_source
@@ -36,7 +41,7 @@
 static int
 is_source (const char **sources, int source_count, char * source){
 	int i;
-	char *s;
+	const char *s;
 	if (sources != NULL) {
 		for (i = 0;i < source_count;i++){
 			s = strrchr(sources[i],'/');
@@ -318,7 +323,7 @@ struct rbc_output *
 run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 	struct rbc_dynamic_input *dynamic_input = NULL;
 	struct rbc_output *output = NULL;
-	char command[LINE_MAX]="valgrind --log-file=fil\%p --tool=helgrind ";
+	char command[LINE_MAX]=DEFAULT_CMD;
 	int i;
 	char line[LINE_MAX],name[LINE_MAX],*p;
 	FILE *f,*g;
@@ -331,10 +336,10 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 		dynamic_input = (struct rbc_dynamic_input *) input->input_ptr;
 					
 		strcat(command,dynamic_input->exec_name);
-		strcat(command," > /dev/null");
+		strcat(command,DEV_NULL);
 		system(command);
 
-		f=popen("ls fil*","r");
+		f=popen(LIST_OUTPUT_FILES,"r");
 		if (f==NULL) return NULL;	
 		
 		while (fgets(name, LINE_MAX, f) != NULL){
@@ -405,9 +410,9 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 			fclose(g);
 		}
 		pclose(f);
-		print_list(output);
-		system("rm fil*");
-		printf("gata cu succes\n");
+		//print_list(output);
+		system(REMOVE_OUTPUT_FILES);
+
 	}
 	return output;
 }

@@ -2,13 +2,13 @@
  * rbc_valgrind.c: Valgrind module
  *
  * General description: 
- * 	Checks for invalid memory access, memory leaks, usage of 
+ * 	Checks for invalid free/memory access, memory leaks, usage of 
  * uninitialized variables and unclosed file descriptors.Parses the 
  * output of valgrind according to the bit set of tracked errors 
  * (user can choose to track a part, none or all types of errors).
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 27.06.2011
+ *              * last review 10.07.2011
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,7 +37,7 @@
 static int
 is_source (const char **sources, int source_count, char * source){
 	int i;
-	char *s;
+	const char *s;
 	if (sources != NULL) {
 		for (i = 0;i < source_count;i++){
 			s = strrchr(sources[i],'/');
@@ -80,6 +80,9 @@ print_list(struct rbc_output *list){
 				break;
 			case ERR_FILE_DESCRIPTORS:
 				printf("\nOPENED, BUT NOT CLOSED FILE DESCRIPTOR:\n");
+				break;
+			case ERR_INVALID_FREE:
+				printf("\nINVALID_FREE\n");
 				break;
 			default:
 				break;
@@ -368,13 +371,19 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 					file_descriptors(&g,line, &output);
 					continue;				
 				}
+				if (ISSET_ERR(ERR_INVALID_FREE, flags)
+					&& strstr(line,"Invalid free()")){
+					get_info(&g,dynamic_input,&output,ERR_INVALID_FREE);
+					continue;				
+				}
+				
 				
 			}
 			fclose(g);
 
 		}
 		pclose(f);
-		print_list(output);
+		//print_list(output);
 		system(REMOVE_OUTPUT_FILES);
 		
 	}
