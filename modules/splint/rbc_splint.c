@@ -9,7 +9,7 @@
  *	Parses the output of splint according to the bit set, flags.
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 27.06.2011
+ *              * last review 10.07.2011
  */
 
 #include <stdio.h>
