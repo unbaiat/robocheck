@@ -42,7 +42,7 @@ make_obj:
 	$(CC) $(CFLAGS) $(XML_FILES_PATH) config/configure.c
 	$(CC) $(CFLAGS) $(RBC_FILES_PATH)
 
-configure: config/configure.o
+configure: configure.o
 	$(QUIET_LINK) $(CC) $^ $(LDLIBS) $(XML_OBJ_FILES) -o configure
 
 penalty: penalty.o
