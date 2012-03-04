@@ -60,7 +60,7 @@ struct statement {
 		};
 		struct /* labeled_struct */ {
 			struct symbol *label_identifier;
-			struct statement *label_statement;
+			struct statement *label_statement_id;
 		};
 		struct /* case_struct */ {
 			struct expression *case_expression;
