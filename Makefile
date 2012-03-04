@@ -42,8 +42,8 @@ make_obj:
 	$(CC) $(CFLAGS) $(XML_FILES_PATH) config/configure.c
 	$(CC) $(CFLAGS) $(RBC_FILES_PATH)
 
-configure:
-	$(QUIET_LINK) $(CC) $(LDLIBS) $(XML_OBJ_FILES) configure.o -o configure
+configure: config/configure.o
+	$(QUIET_LINK) $(CC) $^ $(LDLIBS) $(XML_OBJ_FILES) -o configure
 
 penalty: penalty.o
 	$(CC) $^ $(LDLIBS) $(SO_FLAGS) -o libpenalty.so
