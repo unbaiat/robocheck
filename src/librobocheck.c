@@ -761,9 +761,9 @@ update_errors()
 	log_message("Penalty results: ", NULL);
 
 	start = 0;
-	for (i = 0; i < __output_size; i++)
+	for (i = 0; i <= __output_size; i++)
 	{
-		if (__output[i]->err_type != __output[start]->err_type)
+		if (i == __output_size || (__output[i]->err_type != __output[start]->err_type))
 		{
 #ifdef RBC_DEBUG
 			printf ("[%d- %d]\n", start, i - 1);
@@ -788,30 +788,6 @@ update_errors()
 			}
 
 			start = i;
-		}
-	}
-
-#ifdef RBC_DEBUG
-	printf ("[%d - %d]\n", start, i - 1);
-#endif
-
-	count = (i - 1) - start + 1;
-#ifdef RBC_DEBUG
-	printf ("\ncount is %d\n", count);
-#endif
-
-	aux = apply_penalty_ptr(__output[start]->err_type, count);
-	if (aux != NULL)
-	{
-		sprintf (penalty_buff, "- %.2f p  | %s | %s", aux->penalty_value, aux->msg, aux->penalty);
-		log_message(penalty_buff, NULL);
-
-		for (j = start; j <= (i - 1); j++)
-		{
-			sprintf (penalty_buff, "\t\t%s", __output[j]->err_msg);
-			log_message(penalty_buff, NULL);
-
-			__output[j]->aux_info = aux;
 		}
 	}
 }
