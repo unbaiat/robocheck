@@ -83,10 +83,10 @@ close_robocheck (void)
 }
 
 int
-init_robocheck (FILE *out)
+init_robocheck (FILE *logger, FILE *out)
 {
-	// TODO
-	FileLogger = out;
+	FileLogger = logger;
+	OutputStream = out;
 	
 	read_startup_info();
 
@@ -742,6 +742,55 @@ sort_output_vector ()
 }
 
 static void
+json_output_start()
+{
+	fprintf(OutputStream, "{\n\t\"result\":\n\t[\n");
+	fflush(OutputStream);
+}
+
+static void
+json_output_error(struct rbc_out_info *info)
+{
+	fprintf(OutputStream, "\t\t{\n");
+	fprintf(OutputStream, "\t\t\t\"name\" : \"%s\",\n", info->msg);
+	fprintf(OutputStream, "\t\t\t\"key\" : \"%s\",\n", info->penalty);
+	fprintf(OutputStream, "\t\t\t\"value\" : \"%.2f\",\n", info->penalty_value);
+	fprintf(OutputStream, "\t\t\t\"where\" :\n\t\t\t[\n");
+	fflush(OutputStream);
+}
+
+static void
+json_output_error_message(char *msg, int code)
+{
+	msg = strdup(msg);
+	trim_whitespace(msg);
+	fprintf(OutputStream, "\t\t\t\t{ \"line\" : \"%s\" }", msg);
+	free(msg);
+
+	if (!code)
+		fprintf(OutputStream, ",");
+	fprintf(OutputStream, "\n");
+	fflush(OutputStream);
+}
+
+static void
+json_output_error_end(int code)
+{
+	fprintf(OutputStream, "\t\t\t]\n\t\t}");
+	if (!code)
+		fprintf(OutputStream, ",");
+	fprintf(OutputStream, "\n");
+	fflush(OutputStream);
+}
+
+static void
+json_output_end()
+{
+	fprintf(OutputStream, "\t]\n}\n");
+	fflush(OutputStream);
+}
+
+static void
 update_errors()
 {
 	int i, j, start, count;
@@ -759,6 +808,7 @@ update_errors()
 #endif
 
 	log_message("Penalty results: ", NULL);
+	json_output_start();
 
 	start = 0;
 	for (i = 0; i <= __output_size; i++)
@@ -776,20 +826,26 @@ update_errors()
 			{
 				sprintf (penalty_buff, "- %.2f p  | %s | %s", aux->penalty_value, aux->msg, aux->penalty);
 				log_message(penalty_buff, NULL);
+				json_output_error(aux);
 				
 
 				for (j = start; j <= (i - 1); j++)
 				{
 					sprintf (penalty_buff, "\t\t%s", __output[j]->err_msg);
 					log_message(penalty_buff, NULL);
+					json_output_error_message(__output[j]->err_msg, j == (i - 1));
 
 					__output[j]->aux_info = aux;
 				}
+
+				json_output_error_end(i == __output_size);
 			}
 
 			start = i;
 		}
 	}
+
+	json_output_end();
 }
 
 #ifdef RBC_DEBUG

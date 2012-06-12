@@ -211,7 +211,7 @@ get_info(FILE **g,struct rbc_dynamic_input *dynamic_input,struct rbc_output **ou
 		if (!found_a_file &&
 			is_source(dynamic_input->sources, dynamic_input->source_count,s_name)){
 			found_a_file = 1;
-			strcpy(error_message, " In function ");
+			strcpy(error_message, "In function ");
 			strcat(error_message, f_name);
 			strcat(error_message, ", in file ");
 			strcat(error_message, s_name);

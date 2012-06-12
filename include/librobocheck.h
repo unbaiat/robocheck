@@ -14,6 +14,7 @@ struct rbc_static_input *__static_ptr = NULL;
 int __rbc_err_count = -1;
 
 FILE * FileLogger = NULL;
+FILE * OutputStream = NULL;
 char LoggerBuff[2 * MAX_BUFF_SIZE];
 char CurrentModule[2 * MAX_BUFF_SIZE];
 
@@ -22,7 +23,7 @@ void
 close_robocheck (void);
 
 int
-init_robocheck (FILE *);
+init_robocheck (FILE *, FILE *);
 
 int
 extract_error_count(rbc_xml_doc doc_ptr);

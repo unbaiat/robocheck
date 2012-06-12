@@ -8,8 +8,9 @@
 int main(int argc, char **argv)
 {
 	FILE *logger = stderr;
+	FILE *output = stdout;
 
-	init_robocheck(logger);
+	init_robocheck(logger, output);
 	run_robocheck();
 	close_robocheck();
 

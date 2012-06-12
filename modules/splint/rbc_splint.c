@@ -124,10 +124,10 @@ get_info(char *line,int case_static,struct rbc_output **output,enum EN_err_type 
 	if (l_number == NULL) 
 		return;
 	if (case_static || function == NULL){
-		strcpy(error_message, " In file ");
+		strcpy(error_message, "In file ");
 	}
 	else{
-		strcpy(error_message, " In function ");
+		strcpy(error_message, "In function ");
 		strcat(error_message, function);
 		strcat(error_message, ", in file ");
 	}	
