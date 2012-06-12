@@ -15,7 +15,7 @@ log_message (char *message, FILE *f_ptr)
 {
 	int status = 0;
 	
-	create_log_message (message);	
+	create_log_message (message);
 	
 	if (f_ptr != NULL)
 	{

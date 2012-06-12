@@ -22,7 +22,7 @@ void
 close_robocheck (void);
 
 int
-init_robocheck (void);
+init_robocheck (FILE *);
 
 int
 extract_error_count(rbc_xml_doc doc_ptr);

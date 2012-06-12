@@ -83,10 +83,10 @@ close_robocheck (void)
 }
 
 int
-init_robocheck (void)
+init_robocheck (FILE *out)
 {
 	// TODO
-	FileLogger = stdout;
+	FileLogger = out;
 	
 	read_startup_info();
 
@@ -563,7 +563,7 @@ load_libpenalty(void)
 		if (fptr_init != NULL && fptr_init(__root) == 0)
 		{	
 			ret_status = 0;
-			apply_penalty_ptr = dlsym(__libpenalty, "apply_penalty");			
+			apply_penalty_ptr = dlsym(__libpenalty, "apply_penalty");
 			if ((error = dlerror()) != NULL)
 			{
 				log_message (error, NULL);

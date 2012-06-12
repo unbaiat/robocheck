@@ -7,7 +7,9 @@
 
 int main(int argc, char **argv)
 {
-	init_robocheck();
+	FILE *logger = stderr;
+
+	init_robocheck(logger);
 	run_robocheck();
 	close_robocheck();
 
