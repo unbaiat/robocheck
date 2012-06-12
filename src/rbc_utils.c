@@ -9,6 +9,35 @@
 #include "../lib/rbc_utils.h"
 
 void
+trim_whitespace (char *str)
+{
+	char *whitespace = " \t\n\r";
+	int len = strlen(str), i = len - 1;
+	
+	/* Trailing whitespace */
+	while(i >= 0)
+	{
+		if (strchr(whitespace, str[i]) == NULL)
+			break;
+		str[i] = 0;
+		i--;
+		len--;
+	}
+
+	/* Starting whitespace */
+	i = 0;
+	while(i < len)
+	{
+		if (strchr(whitespace, str[i]) == NULL)
+			break;
+		i++;
+	}
+
+	if (i)
+		memmove(str, str + i, len - i + 1);
+}
+
+void
 create_log_message (char * message)
 {
 	int status = 0;
