@@ -1,0 +1,6 @@
+K 13
+svn:externals
+V 55
+-r 1405 //dynamorio.googlecode.com/svn/trunk dynamorio
+
+END

@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/815/trunk/wininc
+END
+ndk_extypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/375/trunk/wininc/ndk_extypes.h
+END
+ntgdihdl.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/717/trunk/wininc/ntgdihdl.h
+END
+ntgdityp.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/368/trunk/wininc/ntgdityp.h
+END
+ntgdi.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/369/trunk/wininc/ntgdi.h
+END
+iptypes_undocumented.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/695/trunk/wininc/iptypes_undocumented.h
+END
+ntalpctyp.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/815/trunk/wininc/ntalpctyp.h
+END
+ntuser.h
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/375/trunk/wininc/ntuser.h
+END
+tdi.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/281/trunk/wininc/tdi.h
+END
+afd_shared.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/306/trunk/wininc/afd_shared.h
+END
+ntalpc.h
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/815/trunk/wininc/ntalpc.h
+END
+tcpioctl.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/695/trunk/wininc/tcpioctl.h
+END
+msafdlib.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/314/trunk/wininc/msafdlib.h
+END
+wsock.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/281/trunk/wininc/wsock.h
+END
+ndk_iotypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/281/trunk/wininc/ndk_iotypes.h
+END
+ndk_dbgktypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/281/trunk/wininc/ndk_dbgktypes.h
+END
+winioctl.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/695/trunk/wininc/winioctl.h
+END

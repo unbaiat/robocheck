@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1368/trunk/suite/tests/api
+END
+dis.runcmp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/476/trunk/suite/tests/api/dis.runcmp
+END
+startstop.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/1368/trunk/suite/tests/api/startstop.c
+END
+dis.template
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/1295/trunk/suite/tests/api/dis.template
+END
+startstop.expect
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1/trunk/suite/tests/api/startstop.expect
+END
+ir.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/1330/trunk/suite/tests/api/ir.c
+END
+ir_0args.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/727/trunk/suite/tests/api/ir_0args.h
+END
+ir_1args.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/727/trunk/suite/tests/api/ir_1args.h
+END
+ir_2args.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/969/trunk/suite/tests/api/ir_2args.h
+END
+ir_3args.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/883/trunk/suite/tests/api/ir_3args.h
+END
+dis.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/704/trunk/suite/tests/api/dis.c
+END
+ir_4args.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/883/trunk/suite/tests/api/ir_4args.h
+END
+ir.expect
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/88/trunk/suite/tests/api/ir.expect
+END
+static.template
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1157/trunk/suite/tests/api/static.template
+END
+static.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/1157/trunk/suite/tests/api/static.c
+END
+dis-udis86-randtest.raw
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/suite/tests/api/dis-udis86-randtest.raw
+END

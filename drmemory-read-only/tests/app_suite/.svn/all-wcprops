@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/804/trunk/tests/app_suite
+END
+os_version_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/710/trunk/tests/app_suite/os_version_win.cpp
+END
+stability_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/452/trunk/tests/app_suite/stability_tests_win.cpp
+END
+ntgdi_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/717/trunk/tests/app_suite/ntgdi_tests_win.cpp
+END
+iphlpapi_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/704/trunk/tests/app_suite/iphlpapi_tests_win.cpp
+END
+registry_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/700/trunk/tests/app_suite/registry_tests_win.cpp
+END
+os_version_win.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/710/trunk/tests/app_suite/os_version_win.h
+END
+shell32_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/711/trunk/tests/app_suite/shell32_tests_win.cpp
+END
+simple_tests.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/333/trunk/tests/app_suite/simple_tests.cpp
+END
+ole_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/708/trunk/tests/app_suite/ole_tests_win.cpp
+END
+ntuser_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/724/trunk/tests/app_suite/ntuser_tests_win.cpp
+END
+crypto_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/700/trunk/tests/app_suite/crypto_tests_win.cpp
+END
+ntalpc_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/744/trunk/tests/app_suite/ntalpc_tests_win.cpp
+END
+stl_tests.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/361/trunk/tests/app_suite/stl_tests.cpp
+END
+userenv_tests_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/738/trunk/tests/app_suite/userenv_tests_win.cpp
+END
+strmem_tests.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/700/trunk/tests/app_suite/strmem_tests.cpp
+END
+default-suppressions.txt
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/804/trunk/tests/app_suite/default-suppressions.txt
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/333/trunk/tests/app_suite/CMakeLists.txt
+END

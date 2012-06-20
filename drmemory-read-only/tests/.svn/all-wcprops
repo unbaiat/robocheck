@@ -1,0 +1,833 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/895/trunk/tests
+END
+time-allocs.out
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/515/trunk/tests/time-allocs.out
+END
+nudge.heapstat.out
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/718/trunk/tests/nudge.heapstat.out
+END
+addronly.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/820/trunk/tests/addronly.out
+END
+bitfield.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/812/trunk/tests/bitfield.out
+END
+pthreads.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/tests/pthreads.c
+END
+loader.lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/tests/loader.lib.c
+END
+runsuite.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/754/trunk/tests/runsuite.cmake
+END
+wincrt.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/718/trunk/tests/wincrt.res
+END
+suppress-gensyms.res
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/706/trunk/tests/suppress-gensyms.res
+END
+rungcc.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/754/trunk/tests/rungcc.cmake
+END
+suppress-noerrors.out
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/706/trunk/tests/suppress-noerrors.out
+END
+unload.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/718/trunk/tests/unload.c
+END
+suppressB.win.suppress
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/807/trunk/tests/suppressB.win.suppress
+END
+time-instrs.res
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/427/trunk/tests/time-instrs.res
+END
+time-bytes.res
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/427/trunk/tests/time-bytes.res
+END
+loader.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/561/trunk/tests/loader.out
+END
+procterm.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/831/trunk/tests/procterm.c
+END
+rtl_memory_zones.out
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/641/trunk/tests/rtl_memory_zones.out
+END
+annotations.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/676/trunk/tests/annotations.c
+END
+addronly-reg.res
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/853/trunk/tests/addronly-reg.res
+END
+suppress-genoffs.out
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/706/trunk/tests/suppress-genoffs.out
+END
+clone.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/1/trunk/tests/clone.c
+END
+leakcycle.res
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/718/trunk/tests/leakcycle.res
+END
+execve.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/515/trunk/tests/execve.out
+END
+free.out
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/515/trunk/tests/free.out
+END
+patterns.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/tests/patterns.res
+END
+nudge.res
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/718/trunk/tests/nudge.res
+END
+cs2bugMTd.out
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/754/trunk/tests/cs2bugMTd.out
+END
+stale.res
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1/trunk/tests/stale.res
+END
+realloc.c
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/246/trunk/tests/realloc.c
+END
+suppress.vmk.suppress
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/250/trunk/tests/suppress.vmk.suppress
+END
+clone.out
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/561/trunk/tests/clone.out
+END
+realloc.res
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/246/trunk/tests/realloc.res
+END
+dump.out
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/515/trunk/tests/dump.out
+END
+signal.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/561/trunk/tests/signal.out
+END
+leaks-only.out
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/515/trunk/tests/leaks-only.out
+END
+float.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/1/trunk/tests/float.c
+END
+rtl_memory_zones.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/700/trunk/tests/rtl_memory_zones.c
+END
+perturb.out
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/271/trunk/tests/perturb.out
+END
+gdi.res
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/870/trunk/tests/gdi.res
+END
+hello.res
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1/trunk/tests/hello.res
+END
+rtl_memory_zones.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/642/trunk/tests/rtl_memory_zones.h
+END
+float.res
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/461/trunk/tests/float.res
+END
+reachable.res
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/754/trunk/tests/reachable.res
+END
+varstack.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/620/trunk/tests/varstack.c
+END
+malloc.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/562/trunk/tests/malloc.res
+END
+winthreads.res
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/515/trunk/tests/winthreads.res
+END
+execve.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/1/trunk/tests/execve.c
+END
+pthreads.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/tests/pthreads.res
+END
+bitfield.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/812/trunk/tests/bitfield.cpp
+END
+unload.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/461/trunk/tests/unload.res
+END
+malloc.pattern.res
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/853/trunk/tests/malloc.pattern.res
+END
+wincrt.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/718/trunk/tests/wincrt.out
+END
+suppress-gensyms.out
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/706/trunk/tests/suppress-gensyms.out
+END
+cs2bug.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/754/trunk/tests/cs2bug.res
+END
+copy.bat
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/112/trunk/tests/copy.bat
+END
+patterns.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/tests/patterns.c
+END
+bitfield.strict.res
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/812/trunk/tests/bitfield.strict.res
+END
+time-instrs.out
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/515/trunk/tests/time-instrs.out
+END
+suppress-mod-bar.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/706/trunk/tests/suppress-mod-bar.c
+END
+time-bytes.out
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/515/trunk/tests/time-bytes.out
+END
+stale.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/1/trunk/tests/stale.c
+END
+addronly-reg.out
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/718/trunk/tests/addronly-reg.out
+END
+registers.res
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/836/trunk/tests/registers.res
+END
+leakcycle.out
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/515/trunk/tests/leakcycle.out
+END
+annotations.out
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/676/trunk/tests/annotations.out
+END
+patterns.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/561/trunk/tests/patterns.out
+END
+malloc.heapstat.res
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/515/trunk/tests/malloc.heapstat.res
+END
+nudge.out
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/718/trunk/tests/nudge.out
+END
+selfmod.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1/trunk/tests/selfmod.c
+END
+memalign.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/246/trunk/tests/memalign.c
+END
+stale.out
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1/trunk/tests/stale.out
+END
+selfmod.res
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/1/trunk/tests/selfmod.res
+END
+memalign.res
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/246/trunk/tests/memalign.res
+END
+runtest.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/754/trunk/tests/runtest.cmake
+END
+loader.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/246/trunk/tests/loader.c
+END
+realloc.out
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/561/trunk/tests/realloc.out
+END
+unix_syscalls.res
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/527/trunk/tests/unix_syscalls.res
+END
+winthreads.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/606/trunk/tests/winthreads.c
+END
+cs2bug.heapstat.out
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/649/trunk/tests/cs2bug.heapstat.out
+END
+varstack.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/tests/varstack.res
+END
+unload.lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/784/trunk/tests/unload.lib.c
+END
+hello.out
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/561/trunk/tests/hello.out
+END
+gdi.out
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/870/trunk/tests/gdi.out
+END
+float.out
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/515/trunk/tests/float.out
+END
+wincrtdbg.res
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/718/trunk/tests/wincrtdbg.res
+END
+reachable.out
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/754/trunk/tests/reachable.out
+END
+suppress.res
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/706/trunk/tests/suppress.res
+END
+malloc.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/515/trunk/tests/malloc.out
+END
+winthreads.out
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/640/trunk/tests/winthreads.out
+END
+pthreads.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/561/trunk/tests/pthreads.out
+END
+procterm.res
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/831/trunk/tests/procterm.res
+END
+infloop.c
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/339/trunk/tests/infloop.c
+END
+wincrt.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/718/trunk/tests/wincrt.cpp
+END
+unload.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/561/trunk/tests/unload.out
+END
+malloc.pattern.out
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/854/trunk/tests/malloc.pattern.out
+END
+cs2bug.out
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/754/trunk/tests/cs2bug.out
+END
+skip-results.res
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/562/trunk/tests/skip-results.res
+END
+bitfield.strict.out
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/812/trunk/tests/bitfield.strict.out
+END
+time-allocs.res
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/427/trunk/tests/time-allocs.res
+END
+addronly.res
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/593/trunk/tests/addronly.res
+END
+bitfield.res
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/812/trunk/tests/bitfield.res
+END
+leakcycle.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/478/trunk/tests/leakcycle.cpp
+END
+registers.out
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/574/trunk/tests/registers.out
+END
+unix_syscalls.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/527/trunk/tests/unix_syscalls.c
+END
+run_in_bg.c
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/1/trunk/tests/run_in_bg.c
+END
+suppress-noerrors.res
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/706/trunk/tests/suppress-noerrors.res
+END
+hello.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/1/trunk/tests/hello.c
+END
+malloc.heapstat.out
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/515/trunk/tests/malloc.heapstat.out
+END
+suppress.lin.suppress
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/706/trunk/tests/suppress.lin.suppress
+END
+malloc.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/895/trunk/tests/malloc.c
+END
+loader.res
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/tests/loader.res
+END
+selfmod.out
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/561/trunk/tests/selfmod.out
+END
+memalign.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/561/trunk/tests/memalign.out
+END
+suppress-genoffs.res
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/706/trunk/tests/suppress-genoffs.res
+END
+free.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/246/trunk/tests/free.c
+END
+suppress.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/706/trunk/tests/suppress.c
+END
+unix_syscalls.out
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/526/trunk/tests/unix_syscalls.out
+END
+execve.res
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/562/trunk/tests/execve.res
+END
+free.res
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/593/trunk/tests/free.res
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/895/trunk/tests/CMakeLists.txt
+END
+cs2bugMTd.res
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/754/trunk/tests/cs2bugMTd.res
+END
+varstack.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/561/trunk/tests/varstack.out
+END
+gdi.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/870/trunk/tests/gdi.cpp
+END
+clone.res
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1/trunk/tests/clone.res
+END
+registers.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/836/trunk/tests/registers.c
+END
+wincrtdbg.out
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/718/trunk/tests/wincrtdbg.out
+END
+suppress.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/706/trunk/tests/suppress.out
+END
+suppressB.lin.suppress
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/559/trunk/tests/suppressB.lin.suppress
+END
+dump.res
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/427/trunk/tests/dump.res
+END
+signal.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/246/trunk/tests/signal.c
+END
+procterm.out
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/831/trunk/tests/procterm.out
+END
+suppress.win.suppress
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/706/trunk/tests/suppress.win.suppress
+END
+suppress-mod-foo.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/706/trunk/tests/suppress-mod-foo.c
+END
+signal.res
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/tests/signal.res
+END
+leaks-only.res
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/562/trunk/tests/leaks-only.res
+END
+cs2bug.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/754/trunk/tests/cs2bug.cpp
+END
+skip-results.out
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/271/trunk/tests/skip-results.out
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 23
+/svn/!svn/ver/899/trunk
+END
+license.txt
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/1/trunk/license.txt
+END
+CTestConfig.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/246/trunk/CTestConfig.cmake
+END
+ACKNOWLEDGEMENTS
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/791/trunk/ACKNOWLEDGEMENTS
+END
+package.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/246/trunk/package.cmake
+END
+lgpl-2.1.txt
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/1/trunk/lgpl-2.1.txt
+END
+codereview.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/246/trunk/codereview.cmake
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/694/trunk/README
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/897/trunk/CMakeLists.txt
+END

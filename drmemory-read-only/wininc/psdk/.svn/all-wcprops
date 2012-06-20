@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/368/trunk/wininc/psdk
+END
+dvp.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/368/trunk/wininc/psdk/dvp.h
+END
+prntfont.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/368/trunk/wininc/psdk/prntfont.h
+END
+ddrawint.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/368/trunk/wininc/psdk/ddrawint.h
+END
+winddi.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/368/trunk/wininc/psdk/winddi.h
+END
+d3dtypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/368/trunk/wininc/psdk/d3dtypes.h
+END
+ddraw.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/368/trunk/wininc/psdk/ddraw.h
+END
+d3dnthal.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/368/trunk/wininc/psdk/d3dnthal.h
+END
+dxgiformat.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/368/trunk/wininc/psdk/dxgiformat.h
+END
+ntgdi.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/368/trunk/wininc/psdk/ntgdi.h
+END

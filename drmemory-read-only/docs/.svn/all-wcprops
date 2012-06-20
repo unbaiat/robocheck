@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/490/trunk/docs
+END
+footer.html
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/docs/footer.html
+END
+CMake_rundoxygen.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/1/trunk/docs/CMake_rundoxygen.cmake
+END
+CMake_doxyfile.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/246/trunk/docs/CMake_doxyfile.cmake
+END
+Doxyfile.in
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/490/trunk/docs/Doxyfile.in
+END
+favicon.png
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/docs/favicon.png
+END
+header.html
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/docs/header.html
+END
+htmlstyle.css
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/docs/htmlstyle.css
+END
+CMake_footer.cmake
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/1/trunk/docs/CMake_footer.cmake
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/246/trunk/docs/CMakeLists.txt
+END
+favicon.ico
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/1/trunk/docs/favicon.ico
+END
