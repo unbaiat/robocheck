@@ -1,4 +1,3 @@
-
 #ifndef RBC_DYNAMIC_TOOL_H_
 #define RBC_DYNAMIC_TOOL_H_
 
