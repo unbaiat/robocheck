@@ -28,7 +28,7 @@ QUIET_LINK    = $(Q:@=@echo    '     LINK     '$@;)
 
 .PHONY: all clean
 
-all: robocheck sparse
+all: robocheck sparse drmemory
 	bash make_modules.sh build
 	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o main -lrobocheck -L.
 	ln -s sparse-0.4.1/rbc_sparse_utils/black_list
@@ -59,4 +59,5 @@ drmemory:
 clean:
 	cd ./sparse-0.4.1; make clean
 	-rm -f *.so *.o *~ configure main static_analyzer black_list
+	-rm -f drmemory
 	bash make_modules.sh clean
