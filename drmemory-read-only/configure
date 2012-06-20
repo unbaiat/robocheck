@@ -1,0 +1,26 @@
+#!/bin/bash
+
+export CXXFLAGS=-m32
+export CFLAGS=-m32
+
+pushd build
+
+NUM_FILES=$(ls | wc -l)
+
+if [ $NUM_FILES -gt 1 ]; then
+	# Drmemory should be reconfigured.
+	echo "Reconfigure drmemory ..."
+
+	# Re-Configuring
+	make rebuild_cache
+else
+	# Configure drmemory for the first time.
+	echo "Configure drmemory ..."
+
+	# Configure
+	ccmake ..
+	# Building and installing
+	make
+fi
+
+popd
