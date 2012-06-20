@@ -53,6 +53,8 @@ sparse:
 
 drmemory:
 	cd ./drmemory-read-only; ./configure ; cd ..
+	-rm -f drmemory
+	ln -s ./drmemory-read-only/build/bin/drmemory.pl drmemory
 
 clean:
 	cd ./sparse-0.4.1; make clean
