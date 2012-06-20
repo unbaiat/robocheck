@@ -51,6 +51,9 @@ penalty: penalty.o
 sparse:
 	cd ./sparse-0.4.1; make; rm -f *.o
 
+drmemory:
+	cd ./drmemory-read-only; ./configure ; cd ..
+
 clean:
 	cd ./sparse-0.4.1; make clean
 	-rm -f *.so *.o *~ configure main static_analyzer black_list
