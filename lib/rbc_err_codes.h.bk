@@ -1,0 +1,11 @@
+#ifndef RBC_ERR_CODES_H_
+#define RBC_ERR_CODES_H_
+
+enum EN_err_type
+{
+	ERR_NONE,
+
+	ERR_MAX
+};
+
+#endif
