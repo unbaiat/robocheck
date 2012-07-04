@@ -89,7 +89,8 @@ int main (int argc, char **argv)
             {
                 if (argc > 2)
                 {
-                    create_error(doc, argv[2]);
+                    //create_error(doc, argv[2]);
+		    printf("Deprecated!\n");
                 }
                 else
                 {

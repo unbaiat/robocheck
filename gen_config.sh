@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clean old errors
-cp lib/rbc_err_codes.h.bk lib/rbc_err_codes.h
+#cp lib/rbc_err_codes.h.bk lib/rbc_err_codes.h
 
 echo -e "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" > rbc_config.xml
 echo -e "<appSettings>\n" >> rbc_config.xml
@@ -10,34 +10,33 @@ echo -e "    <tools count=\"0\">\n" >> rbc_config.xml
 echo -e "    </tools>\n" >> rbc_config.xml
 echo -e "    <input/>\n" >> rbc_config.xml
 echo -e "    <penalty load=\"false\" lib_path=\"libpenalty.so\"/>\n" >> rbc_config.xml
-echo -e "    <err_count value=\"0\"/>" >> rbc_config.xml
+echo -e "    <err_count value=\"19\"/>" >> rbc_config.xml
 echo -e "  </init>\n" >> rbc_config.xml
 echo -e "  <installed_tools count=\"0\">\n" >> rbc_config.xml
 echo -e "  </installed_tools\n>" >> rbc_config.xml
 echo -e "  <errors>\n" >> rbc_config.xml
+# Create errors
+echo -e "    <err_1 id=\"1\" name=\"Memory leak\"/>" >> rbc_config.xml
+echo -e "    <err_2 id=\"2\" name=\"Invalid access exception\"/>" >> rbc_config.xml
+echo -e "    <err_3 id=\"3\" name=\"Uninitialized\"/>" >> rbc_config.xml
+echo -e "    <err_4 id=\"4\" name=\"File descriptors error\"/>" >> rbc_config.xml
+echo -e "    <err_5 id=\"5\" name=\"Data race\"/>" >> rbc_config.xml
+echo -e "    <err_6 id=\"6\" name=\"Dead lock\"/>" >> rbc_config.xml
+echo -e "    <err_7 id=\"7\" name=\"Unlock\"/>" >> rbc_config.xml
+echo -e "    <err_8 id=\"8\" name=\"Destroy\"/>" >> rbc_config.xml
+echo -e "    <err_9 id=\"9\" name=\"Condition variable\"/>" >> rbc_config.xml
+echo -e "    <err_10 id=\"10\" name=\"Hold lock\"/>" >> rbc_config.xml
+echo -e "    <err_11 id=\"11\" name=\"Duplicate code\"/>" >> rbc_config.xml
+echo -e "    <err_12 id=\"12\" name=\"Static variable\"/>" >> rbc_config.xml
+echo -e "    <err_13 id=\"13\" name=\"Signed unsigned\"/>" >> rbc_config.xml
+echo -e "    <err_14 id=\"14\" name=\"Unverified function return call\"/>" >> rbc_config.xml
+echo -e "    <err_15 id=\"15\" name=\"Function line count exceeds maximum admited\"/>" >> rbc_config.xml
+echo -e "    <err_16 id=\"16\" name=\"Function indentation exceeds maximum admited\"/>" >> rbc_config.xml
+echo -e "    <err_17 id=\"17\" name=\"Trailing whitespace\"/>" >> rbc_config.xml
+echo -e "    <err_18 id=\"18\" name=\"Mixed tabs with spaces\"/>" >> rbc_config.xml
+echo -e "    <err_19 id=\"19\" name=\"Invalid free\"/>" >> rbc_config.xml
 echo -e "  </errors\n>" >> rbc_config.xml
 echo -e "</appSettings>" >> rbc_config.xml
-
-# Create errors
-./configure --create-error "Memory leak"
-./configure --create-error "Invalid access exception"
-./configure --create-error "Uninitialized"
-./configure --create-error "File descriptors error"
-./configure --create-error "Data race"
-./configure --create-error "Dead lock"
-./configure --create-error "Unlock"
-./configure --create-error "Destroy"
-./configure --create-error "Condition variable"
-./configure --create-error "Hold lock"
-./configure --create-error "Duplicate code"
-./configure --create-error "Static variable"
-./configure --create-error "Signed unsigned"
-./configure --create-error "Unverified function return call"
-./configure --create-error "Function line count exceeds maximum admited"
-./configure --create-error "Function indentation exceeds maximum admited"
-./configure --create-error "Trailing whitespace"
-./configure --create-error "Mixed tabs with spaces"
-./configure --create-error "Invalid free"
 
 # Add error details
 ./configure --add-error-details 1 "New memory leak modification" 1 0.2 float
