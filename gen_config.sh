@@ -59,6 +59,18 @@ echo -e "</appSettings>" >> rbc_config.xml
 ./configure --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
 ./configure --add-error-details 19 "Invalid memory free" INF 0.1 float
 
+NAME=drmemory
+# Install tool
+./configure --create-tool $NAME ./modules/drmemory/libdrmemory.so dynamic
+# Use tool -- used at startup
+./configure --register-tool $NAME
+# Register parameters used when tool is running
+# Register errors
+./configure --register-error 1 $NAME
+./configure --register-error 2 $NAME
+./configure --register-error 3 $NAME
+./configure --register-error 19 $NAME
+
 NAME=valgrind
 # Install tool
 ./configure --create-tool $NAME ./modules/valgrind/libvalgrind.so dynamic

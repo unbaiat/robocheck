@@ -26,7 +26,7 @@ QUIET_AR      = $(Q:@=@echo    '     AR       '$@;)
 QUIET_GEN     = $(Q:@=@echo    '     GEN      '$@;)
 QUIET_LINK    = $(Q:@=@echo    '     LINK     '$@;)
 
-.PHONY: all clean
+.PHONY: clean all
 
 all: robocheck sparse drmemory
 	bash make_modules.sh build
