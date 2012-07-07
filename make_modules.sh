@@ -13,6 +13,9 @@ then
 		cd modules/$i;
 		echo "Building: " $i
 		make clean; make;
+		if [ $? -ne 0 ]; then
+			exit 1
+		fi
 		cd ../..;
 	done
 
