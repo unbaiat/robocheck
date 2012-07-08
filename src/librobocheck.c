@@ -618,8 +618,26 @@ exit:
 	return ret_value;
 }
 
+/*
+ * Check for duplicates reported errors. (from different modules)
+ */
+static int
+check_for_duplicates (struct rbc_output *output)
+{
+	int i;
+
+	for (i = 0; i < __output_size; i++) {
+		if (output->err_type == __output[i]->err_type 
+		    && output->err_msg != NULL && __output[i]->err_msg != NULL
+		    && cmp_msg_file(output->err_msg, __output[i]->err_msg))
+			return 1;
+	}
+
+	return 0;
+}
+
 static void
-add_range(struct rbc_output * output)
+add_range(struct rbc_output *output)
 {
 	struct rbc_output *crs = NULL, *tmp = NULL;
 
@@ -658,7 +676,8 @@ add_range(struct rbc_output * output)
 			}
 
 			tmp = crs;
-			__output[__output_size++] = dup_rbc_output(crs);
+			if (!check_for_duplicates(crs))
+				__output[__output_size++] = dup_rbc_output(crs);
 			crs = crs->next;
 			free (tmp);
 		}

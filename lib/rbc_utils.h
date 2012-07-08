@@ -20,6 +20,9 @@ void
 trim_whitespace (char *);
 
 int
+cmp_msg_file (char *m1, char *m2);
+
+int
 is_internal_stream (FILE *);
 
 void
