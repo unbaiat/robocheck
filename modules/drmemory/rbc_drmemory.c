@@ -18,7 +18,7 @@
 #include "../../include/dynamic_tool.h"
 
 #define LINE_MAX 512
-#define DEFAULT_CMD "./drmemory -show_reachable -logdir . "
+#define DEFAULT_CMD "./drmemory -show_reachable -redzone_size 0 -logdir . "
 #define DETAILS "~~Dr.M~~ Details: "
 
 #define SPACE " "
@@ -161,12 +161,8 @@ get_info (FILE *results, struct rbc_dynamic_input *dynamic_input,
 		if (!parse_line(line, &f_name, &s_name, &l_num, dynamic_input))
 			continue;
 
-		strcat(error_msg, "In function ");
-		strcat(error_msg, f_name);
-		strcat(error_msg, ", in file ");
-		strcat(error_msg, s_name);
-		strcat(error_msg, ", at line ");
-		strcat(error_msg, l_num);
+		sprintf(error_msg, "In function %s, in file %s, at line %s",
+			f_name, s_name, l_num);
 
 		free(f_name);
 		free(s_name);
@@ -193,7 +189,6 @@ parse_output (FILE *results, struct rbc_dynamic_input *dynamic_input,
 	while (!feof(results)) {
 		memset(line, 0, LINE_MAX);
 		fgets(line, LINE_MAX, results);
-		fprintf(stderr, "&& %s", line);
 
 		if (!strstr(line, "Error"))
 			continue;
@@ -205,19 +200,19 @@ parse_output (FILE *results, struct rbc_dynamic_input *dynamic_input,
 		}
 
 		if (ISSET_ERR(ERR_INVALID_ACCESS, flags)
-		    && strstr(line, "TODO")) {
+		    && strstr(line, "UNADDRESSABLE ACCESS")) {
 			get_info(results, dynamic_input, output, ERR_INVALID_ACCESS);
 			continue;
 		}
 
 		if (ISSET_ERR(ERR_UNINITIALIZED, flags)
-		    && strstr(line, "TODO")) {
+		    && strstr(line, "UNINITIALIZED READ")) {
 			get_info(results, dynamic_input, output, ERR_UNINITIALIZED);
 			continue;
 		}
 
 		if (ISSET_ERR(ERR_INVALID_FREE, flags)
-		    && strstr(line, "TODO")) {
+		    && strstr(line, "INVALID HEAP ARGUMENT") && strstr(line, "free")) {
 			get_info(results, dynamic_input, output, ERR_INVALID_FREE);
 			continue;
 		}
@@ -243,6 +238,30 @@ static void remove_output_dir (char *name)
 	strcat(command, dir);
 
 	system(command);
+}
+
+static void
+wait_end_of_writing (char *filename)
+{
+	FILE *in = NULL;
+	char line[LINE_MAX];
+	char command[LINE_MAX];
+
+	memset(command, 0, LINE_MAX);
+	sprintf(command, "fuser %s 2> /dev/null", filename);
+
+	while (1) {
+		in = popen(command, "r");
+
+		memset(line, 0, LINE_MAX);
+		fgets(line, LINE_MAX, in);
+		trim_whitespace(line);
+
+		pclose(in);
+
+		if (strlen(line) == 0)
+			break;
+	}
 }
 
 /*
@@ -291,16 +310,11 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 			}
 		}
 
-		pclose(out_stream);
-		/* TODO */
-		sleep(1);
-		
 		if (name == NULL)
 			return NULL;
 
-		char *a = calloc(1000, 1);
-		sprintf(a, "ls -l %s", name);
-		system(a);
+		wait_end_of_writing(name);
+		pclose(out_stream);
 
 		/* Open output file. */
 		results = fopen(name, "r");
