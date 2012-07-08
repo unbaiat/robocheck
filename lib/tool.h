@@ -1,5 +1,3 @@
-
-
 #ifndef RBC_TOOL_H_
 #define RBC_TOOL_H_
 
@@ -47,31 +45,29 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count);
  * about the currently processed error
  */
 inline void
-add(struct rbc_output **list,struct rbc_output node)
+add (struct rbc_output **list, struct rbc_output node)
 {
-	struct rbc_output *q=NULL,*p = *list;
-	while (p!= NULL){//only adds if unique
-		if (p->err_type == node.err_type &&
-		    p->err_msg != NULL && node.err_msg != NULL &&
-		    strcmp(p->err_msg,node.err_msg) == 0)
-		{
+	struct rbc_output *q = NULL, *p = *list;
+
+	while (p!= NULL) {
+		/* Only adds if unique. */
+		if (p->err_type == node.err_type && p->err_msg != NULL
+		    && node.err_msg != NULL
+		    && strcmp(p->err_msg,node.err_msg) == 0)
 			return;
-		}
 		q = p;
 		p = p->next;
 	}
-	p = (struct rbc_output *) malloc(sizeof(struct rbc_output));
+
+	p = malloc(sizeof(struct rbc_output));
 	p->err_type = node.err_type;
 	p->err_msg = node.err_msg;
 	p->next = NULL;
 
-	if (q == NULL)
-	{
+	if (q == NULL) {
 		*list = p;
 		(*list)->size = 1;
-	}
-	else
-	{
+	} else {
 		(*list)->size++;
 		q->next = p;
 	}
