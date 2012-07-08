@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appSettings>
   <init output="NULL">
-    <tools count="5">
+    <tools count="6">
+      <add value="drmemory"/>
       <add value="valgrind"/>
       <add value="splint"/>
-      <add value="Helgrind"/>
-      <add value="Simian"/>
-      <add value="Sparse"/>
+      <add value="helgrind"/>
+      <add value="simian"/>
+      <add value="sparse"/>
     </tools>
     <input>
       <dynamic value="./tests/complex" arg_count="0"/>
@@ -17,7 +18,19 @@
     <penalty load="true" lib_path="libpenalty.so"/>
     <err_count value="19"/>
   </init>
-  <installed_tools count="5">
+  <installed_tools count="6">
+    <drmemory lib_path="./modules/drmemory/libdrmemory.so" type="dynamic">
+      <parameters param_count="0"/>
+      <errors err_count="4">
+        <add value="1"/>
+        <add value="2"/>
+        <add value="3"/>
+        <add value="19"/>
+      </errors>
+      <input>
+        <dynamic/>
+      </input>
+    </drmemory>
     <valgrind lib_path="./modules/valgrind/libvalgrind.so" type="dynamic">
       <parameters param_count="2">
         <add value="--trace-children=yes"/>
@@ -50,7 +63,7 @@
         <static/>
       </input>
     </splint>
-    <Helgrind lib_path="./modules/helgrind/libhelgrind.so" type="dynamic">
+    <helgrind lib_path="./modules/helgrind/libhelgrind.so" type="dynamic">
       <parameters param_count="0"/>
       <errors err_count="6">
         <add value="5"/>
@@ -63,8 +76,8 @@
       <input>
         <dynamic/>
       </input>
-    </Helgrind>
-    <Simian lib_path="./modules/simian/libsimian.so" type="static">
+    </helgrind>
+    <simian lib_path="./modules/simian/libsimian.so" type="static">
       <parameters param_count="2">
         <add value="-language=C"/>
         <add value="-threshold=4"/>
@@ -75,8 +88,8 @@
       <input>
         <static/>
       </input>
-    </Simian>
-    <Sparse lib_path="modules/sparse/libsparse.so" type="static">
+    </simian>
+    <sparse lib_path="./modules/sparse/libsparse.so" type="static">
       <parameters param_count="5">
         <add value="-c"/>
         <add value="-l 150"/>
@@ -94,20 +107,20 @@
       <input>
         <static/>
       </input>
-    </Sparse>
+    </sparse>
   </installed_tools>
   <errors>
     <err_1 id="1" name="Memory leak">
       <add key="New memory leak modification" count="1" value="0.2" type="float"/>
     </err_1>
     <err_2 id="2" name="Invalid access exception">
-      <add key="invalid accesses" count="INF" value="0.3" type="float"/>
+      <add key="Invalid accesses" count="INF" value="0.3" type="float"/>
     </err_2>
     <err_3 id="3" name="Uninitialized">
       <add key="Use of unitialized variable" count="INF" value="0.2" type="float"/>
     </err_3>
     <err_4 id="4" name="File descriptors error">
-      <add key="Not closingfile descriptors at the end of the program" count="INF" value="0.1" type="float"/>
+      <add key="Not closing file descriptors at the end of the program" count="INF" value="0.1" type="float"/>
     </err_4>
     <err_5 id="5" name="Data race">
       <add key="Data races" count="INF" value="0.1" type="float"/>
@@ -119,21 +132,21 @@
       <add key="Unlock error" count="INF" value="0.1" type="float"/>
     </err_7>
     <err_8 id="8" name="Destroy">
-      <add key="destroy " count="INF" value="0.1" type="float"/>
+      <add key="Destroy" count="INF" value="0.1" type="float"/>
     </err_8>
     <err_9 id="9" name="Condition variable">
-      <add key="missusage of condition variables " count="INF" value="0.1" type="float"/>
+      <add key="Missusage of condition variables" count="INF" value="0.1" type="float"/>
     </err_9>
     <err_10 id="10" name="Hold lock">
-      <add key="hold lock" count="INF" value="0.1" type="float"/>
+      <add key="Hold lock" count="INF" value="0.1" type="float"/>
     </err_10>
     <err_11 id="11" name="Duplicate code">
       <add key="Duplicate code in sources" count="INF" value="0.2" type="float"/>
     </err_11>
-    <err_12 id="12" name="static variable">
+    <err_12 id="12" name="Static variable">
       <add key="Use of non-static variables or functions in a single module" count="INF" value="0.1" type="float"/>
     </err_12>
-    <err_13 id="13" name="signed unsigned">
+    <err_13 id="13" name="Signed unsigned">
       <add key="Assignment from signed to unsigned" count="INF" value="0.1" type="float"/>
     </err_13>
     <err_14 id="14" name="Unverified function return call">
@@ -151,8 +164,8 @@
     <err_18 id="18" name="Mixed tabs with spaces">
       <add key="Mixed tabs with spaces at the begining of each line" count="INF" value="0.2" type="float"/>
     </err_18>
-    <err_19 id="19" name="invalid free">
-      <add key="invalid memory free" count="INF" value="0.1" type="float"/>
+    <err_19 id="19" name="Invalid free">
+      <add key="Invalid memory free" count="INF" value="0.1" type="float"/>
     </err_19>
   </errors>
 </appSettings>
