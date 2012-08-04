@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Linux setup
+
+apt-get install build-essential
+apt-get install binutils
+apt-get install libxslt1.1
+apt-get install libxslt1-dev
+
+apt-get install cmake
+apt-get install perl
+apt-get install javacc
+apt-get install doxygen
+apt-get install flex
+apt-get install libfl-dev
+
+apt-get install g++-multilib
