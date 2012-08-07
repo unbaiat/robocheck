@@ -16,12 +16,6 @@ extern char CurrentModule[2 * MAX_BUFF_SIZE];
 void
 create_log_message (char * );
 
-void
-trim_whitespace (char *);
-
-int
-cmp_msg_file (char *m1, char *m2);
-
 int
 is_internal_stream (FILE *);
 

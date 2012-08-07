@@ -11,11 +11,21 @@
  *              * last review 20.06.2012
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+	#ifndef popen
+		#define popen _popen
+		#define pclose _pclose
+	#endif
+#endif
+
 #include "../../include/dynamic_tool.h"
+#include "../../include/utils.h"
 
 #define LINE_MAX 512
 #define DEFAULT_CMD "./drmemory -show_reachable -redzone_size 0 -logdir . "
@@ -98,13 +108,14 @@ parse_line (char *line, char **f_name, char **s_name, char **l_num,
 	if (p == NULL)
 		return 0;
 
-	first = strdup(p);
+	first = calloc(strlen(p) + 1, sizeof(char));
+	strcpy(first, p);
 	p = strtok(NULL, SEPARATORS);
-	source = strdup(p);
+	source = calloc(strlen(p) + 1, sizeof(char));
+	strcpy(source, p);
 
-	
 	/* Get source filename. */
-	*s_name = calloc(strlen(source), sizeof(char));
+	*s_name = calloc(strlen(source) + 1, sizeof(char));
 	p = strchr(source, ':');
 	strncpy(*s_name, source, p - source);
 
@@ -169,7 +180,8 @@ get_info (FILE *results, struct rbc_dynamic_input *dynamic_input,
 		free(l_num);
 
 		node.err_type = err_type;
-		node.err_msg = strdup(error_msg);
+		node.err_msg = calloc(strlen(error_msg) + 1, sizeof(char));
+		strcpy(node.err_msg, error_msg);
 		add(output, node);
 	
 		break;

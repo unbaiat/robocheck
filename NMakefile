@@ -1,0 +1,26 @@
+CC = cl
+CFLAGS = /nologo /W4 /EHsc /Za
+XML_PATH=C:\licenta\robocheck\lib-win
+
+DIR_SRC = src
+XML_SRC = config
+
+RBC_FILES = rbc_utils.c rbc_task.c librobocheck.c rbc_api.c penalty.c
+XML_FILES = rbc_xml_parser.c rbc_config.c
+
+all: robocheck
+	
+
+robocheck: make_obj configure penalty
+
+make_obj:
+
+configure:
+
+penalty:
+
+clean:
+	del configure 2>NUL
+	del main 2>NUL
+	del *.obj 2>NUL
+	del *~ 2>NUL

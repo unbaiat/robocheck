@@ -1,8 +1,16 @@
 #ifndef RBC_TOOL_H_
 #define RBC_TOOL_H_
 
+#include "../include/utils.h"
+
 #include "rbc_utils.h"
 #include "rbc_api.h"
+
+#ifdef _WIN32
+	#ifndef inline
+		#define inline
+	#endif
+#endif
 
 enum EN_tool_type
 {
@@ -45,7 +53,7 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count);
  * param2: node = the data structure containing information
  * about the currently processed error
  */
-inline void
+inline void 
 add (struct rbc_output **list, struct rbc_output node)
 {
 	struct rbc_output *q = NULL, *p = *list;
@@ -56,7 +64,6 @@ add (struct rbc_output **list, struct rbc_output node)
 		    && node.err_msg != NULL
 		    && cmp_msg_file(p->err_msg, node.err_msg)) {
 			fprintf(stderr, "BLA: %s\n", node.err_msg);
-//			return;
 			break;
 		}
 		q = p;

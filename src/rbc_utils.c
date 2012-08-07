@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,89 +8,6 @@
 #include "../lib/rbc_utils.h"
 
 #define LINE_MAX	512
-
-
-int
-cmp_msg_file (char *m1, char *m2)
-{
-	char *name1 = NULL, *name2 = NULL;
-	char *n1 = strdup(m1);
-	char *n2 = strdup(m2);
-	char *p1 = strcasestr(n1, "in file");
-	char *p2 = strcasestr(n2, "in file");
-	int ret = 0, len1 = 0, len2 = 0, len_start = 0;
-
-	if (p1 == NULL || p2 == NULL)
-		return 0;
-
-	p1 += 8;
-	p2 += 8;
-
-	trim_whitespace(p1);
-	trim_whitespace(p2);
-
-	name1 = strtok(p1, ", ");
-	name2 = strtok(p2, ", ");
-
-	len1 = strlen(name1);
-	len2 = strlen(name2);
-	len_start = name1 - n1;
-
-	if (strcasecmp(name1, name2) == 0)
-		ret = 1;
-	if (strstr(name1, name2))
-		ret = 1;
-	if (strstr(name2, name1))
-		ret = 1;
-
-	/* Compare beginning. */
-	if (strncasecmp(n1, n2, len_start))
-		ret = 0;
-
-	free(n1);
-	free(n2);
-
-	/* Compare end. */
-	n1 = strdup(m1);
-	n2 = strdup(m2);
-	if (strcasecmp(n1 + len_start + len1, n2 + len_start + len2))
-		ret = 0;
-
-	free(n1);
-	free(n2);
-
-	return ret;
-}
-
-
-void
-trim_whitespace (char *str)
-{
-	char *whitespace = " \t\n\r";
-	int len = strlen(str), i = len - 1;
-	
-	/* Trailing whitespace */
-	while(i >= 0)
-	{
-		if (strchr(whitespace, str[i]) == NULL)
-			break;
-		str[i] = 0;
-		i--;
-		len--;
-	}
-
-	/* Starting whitespace */
-	i = 0;
-	while(i < len)
-	{
-		if (strchr(whitespace, str[i]) == NULL)
-			break;
-		i++;
-	}
-
-	if (i)
-		memmove(str, str + i, len - i + 1);
-}
 
 void
 create_log_message (char * message)
