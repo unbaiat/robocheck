@@ -26,13 +26,23 @@ QUIET_AR      = $(Q:@=@echo    '     AR       '$@;)
 QUIET_GEN     = $(Q:@=@echo    '     GEN      '$@;)
 QUIET_LINK    = $(Q:@=@echo    '     LINK     '$@;)
 
+UTILS_SRC = utils.c
+UTILS_OBJ = utils.o
+
 .PHONY: clean all
 
-all: robocheck sparse drmemory
+all: utils robocheck sparse drmemory
 	bash make_modules.sh build
-	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o main -lrobocheck -L.
+	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o main -lrobocheck -lutils -L.
 	ln -sf sparse-0.4.1/rbc_sparse_utils/black_list
-	ln -sf sparse-0.4.1/rbc_sparse_utils/static_analyzer 
+	ln -sf sparse-0.4.1/rbc_sparse_utils/static_analyzer
+
+utils: $(UTILS_OBJ)
+	$(QUIET_LINK) $(CC) $(UTILS_OBJ) -shared -o libutils.so
+	-rm -f $(UTILS_OBJ)
+
+utils.o:
+	$(CC) $(CFLAGS) -c -o $@ src/utils.c
 
 robocheck: make_obj configure penalty
 	$(QUIET_LINK) $(CC) $(XML_OBJ_FILES) $(RBC_OBJ_FILES) $(LIBRBC_FLAGS) $(SO_FLAGS) -o librobocheck.so
