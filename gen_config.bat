@@ -54,3 +54,14 @@ configure.exe --add-error-details 16 "Indentation level overlaps the maximum adm
 configure.exe --add-error-details 17 "Trailing whitespace at the end of lines" INF 0.2 float
 configure.exe --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
 configure.exe --add-error-details 19 "Invalid memory free" INF 0.1 float
+
+configure.exe --create-tool drmemory ./modules/drmemory/libdrmemory.lib dynamic
+configure.exe --register-tool drmemory
+configure.exe --register-error 1 drmemory
+configure.exe --register-error 2 drmemory
+configure.exe --register-error 3 drmemory
+configure.exe --register-error 19 drmemory
+
+configure.exe --set-executable ./tests/simple.exe
+configure.exe --add-static-parameter tests/simple.c
+configure.exe --set-penalty-info true libpenalty.lib
