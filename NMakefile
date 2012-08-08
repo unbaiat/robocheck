@@ -18,7 +18,7 @@ LIB_XML = lib-win\libxml2.lib lib-win\iconv.lib  lib-win\libxslt.lib
 
 all: utils wrapper robocheck 
 	make_modules.bat build
-	$(CC) -Wall $(CFLAGS) /I. /I$(XML_PATH) /Femain main.c  libutils.lib $(LIB_XML) libpenalty.lib librobocheck.lib
+	$(CC) $(CFLAGS)  /I. /I$(XML_PATH) /Femain main.c  libutils.lib $(LIB_XML) libpenalty.lib librobocheck.lib
 
 utils: $(UTILS_OBJ)
 	link /nologo /dll /out:libutils.dll /implib:libutils.lib $(UTILS_OBJ)
