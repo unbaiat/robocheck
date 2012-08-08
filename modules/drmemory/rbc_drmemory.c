@@ -99,19 +99,27 @@ is_source (const char **sources, int source_count, char *source)
  * - the line number
  */
 static int
-parse_line (char *line, char **f_name, char **s_name, char **l_num,
+parse_line (char *lline, char **f_name, char **s_name, char **l_num,
 	    struct rbc_dynamic_input *dynamic_input)
 {
-	char *first, *source;
+	char *first, *source, *p;
+	char *line = strdup(line);
 
-	char *p = strtok(line, SEPARATORS);
+	if (line == NULL || strlen(line) == 0)
+		return 0;
+
+	p = strtok(line, SEPARATORS);
 	if (p == NULL)
 		return 0;
 
-	first = calloc(strlen(p) + 1, sizeof(char));
+	first = calloc(strlen(line) + 1, sizeof(char));
 	strcpy(first, p);
 	p = strtok(NULL, SEPARATORS);
-	source = calloc(strlen(p) + 1, sizeof(char));
+	if (p == NULL) {
+		free(first);
+		return 0;
+	}
+	source = calloc(strlen(line) + 1, sizeof(char));
 	strcpy(source, p);
 
 	/* Get source filename. */
@@ -137,6 +145,7 @@ parse_line (char *line, char **f_name, char **s_name, char **l_num,
 	*f_name = get_function_name(first);
 
 	free(first);
+	free(line);
 
 	return 1;
 }
@@ -150,7 +159,7 @@ static void
 get_info (FILE *results, struct rbc_dynamic_input *dynamic_input,
 	  struct rbc_output **output, enum EN_err_type err_type)
 {
-	char line[LINE_MAX];
+	char line[LINE_MAX + 1];
 	char error_msg[LINE_MAX];
 	struct rbc_output node;
 	char *f_name = NULL, *s_name = NULL, *l_num = NULL;
@@ -159,7 +168,7 @@ get_info (FILE *results, struct rbc_dynamic_input *dynamic_input,
 
 	/* Get info for error. Output finishes with an empty line. */
 	while (!feof(results)) {
-		memset(line, 0, LINE_MAX);
+		memset(line, 0, LINE_MAX + 1);
 		fgets(line, LINE_MAX, results);
 		trim_whitespace(line);
 		if (strlen(line) == 0)

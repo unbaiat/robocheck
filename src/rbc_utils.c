@@ -21,7 +21,7 @@
 void
 create_log_message (char * message)
 {
-	int max_length = 0, current_length = 0;
+	int max_length = 0, current_length = 0, len = 0, i;
 	time_t tt;
 	struct tm *time_struct = NULL;
 
@@ -30,7 +30,7 @@ create_log_message (char * message)
 	max_length = MAX(2 * MAX_BUFF_SIZE, strlen(message) + 1);
 	
 	// reset the buffer
-	memset (LoggerBuff, 2 * MAX_BUFF_SIZE, 0);
+	memset (LoggerBuff, 0, 2 * MAX_BUFF_SIZE);
 	
 	tt = time(&tt);
 	time_struct = localtime(&tt);
@@ -48,8 +48,12 @@ create_log_message (char * message)
 	max_length -= current_length;
 	
 	// append the message contents
-	message[max_length - 1] = '\0';
-	sprintf (LoggerBuff + current_length, " %s\n", message);
+	len = strlen(message);
+	if (len > max_length - 1)
+		len = max_length - 1;
+	sprintf(LoggerBuff + current_length, " ");
+	for (i = 0; i < len; i++)
+		sprintf(LoggerBuff + current_length + 1 + i, "%c", message[i]);
 }
 
 int

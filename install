@@ -15,3 +15,6 @@ apt-get install flex
 apt-get install libfl-dev
 
 apt-get install g++-multilib
+
+apt-get install splint
+apt-get install cmake-curses-gui
