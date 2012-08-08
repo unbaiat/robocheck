@@ -2,6 +2,18 @@
 #ifndef LIB_RBC_H_
 #define LIB_RBC_H_
 
+#ifdef _WIN32
+	#ifdef DLL_EXPORTS
+		#define DLL_DECLSPEC __declspec(dllexport)
+	#endif
+	#ifndef DLL_EXPORTS
+		#define DLL_DECLSPEC __declspec(dllimport)
+	#endif
+#else
+	#define DLL_DECLSPEC
+#endif
+
+
 #include "static_tool.h"
 #include "dynamic_tool.h"
 
@@ -19,10 +31,10 @@ char LoggerBuff[2 * MAX_BUFF_SIZE];
 char CurrentModule[2 * MAX_BUFF_SIZE];
 
 
-void
+DLL_DECLSPEC void
 close_robocheck (void);
 
-int
+DLL_DECLSPEC int
 init_robocheck (FILE *, FILE *);
 
 int
@@ -43,7 +55,7 @@ load_module (struct rbc_input *, rbc_errset_t flags, int *err_count, const char 
 void
 read_startup_info(void);
 
-void
+DLL_DECLSPEC void
 run_robocheck(void);
 
 struct rbc_input *

@@ -3,10 +3,10 @@
 
 #include "rbc_xml_parser.h"
 
-static void *
-function_handles[] = { [TAG_NAME] = check_node_name,
-                       [PROPERTY_NAME] = check_node_property
-                     };
+/* This will be access with enum type EN_xml_lookup
+ * TAG_NAME = check_node_name
+ * PROPERTY_NAME = check_node_property */
+static void *function_handles[] = { check_node_name, check_node_property };
 
 rbc_xml_node
 get_next_node (rbc_xml_node node)

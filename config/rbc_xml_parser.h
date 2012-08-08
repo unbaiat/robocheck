@@ -27,8 +27,8 @@ typedef void* rbc_xml_doc;
 
 enum EN_xml_lookup
 {
-    TAG_NAME,
-    PROPERTY_NAME
+    TAG_NAME ,
+    PROPERTY_NAME 
 };
 
 typedef struct

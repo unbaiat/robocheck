@@ -1,8 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <string.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <ctype.h>
 
+#include "../include/utils.h"
 #include "rbc_config.h"
 
 static char str_number[10];
@@ -13,7 +15,8 @@ list_all_tools(rbc_xml_doc doc)
 {
     rbc_xml_filter_t vec[] =
     {
-        { .filter = TAG_NAME, .filter_value.tag = "installed_tools" }
+		/* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+		{TAG_NAME, "installed_tools"}
     };
 
     printf ("\t\t Installed tools:\n");
@@ -25,8 +28,10 @@ list_startup_tools(rbc_xml_doc doc)
 {
     rbc_xml_filter_t vec[] =
     {
-        { .filter = TAG_NAME, .filter_value.tag = "init" },
-        { .filter = TAG_NAME, .filter_value.tag = "tools" }
+        /* .filter = TAG_NAME, .filter_value.tag = "init" */
+		{TAG_NAME, "init"},
+        /* .filter = TAG_NAME, .filter_value.tag = "tools" */
+		{TAG_NAME, "tools"}
     };
 
     printf ("\t\t Robocheck startup tools:\n");
@@ -38,7 +43,8 @@ list_errors(rbc_xml_doc doc)
 {
     rbc_xml_filter_t vec[] =
     {
-        { .filter = TAG_NAME, .filter_value.tag = "errors" }
+        /* .filter = TAG_NAME, .filter_value.tag = "errors" */
+		{TAG_NAME, "errors"}
     };
 
     printf ("\t\t Registered errors:\n");
@@ -52,9 +58,12 @@ list_tool_info(rbc_xml_doc doc, const char * tool_name)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-            { .filter = TAG_NAME, .filter_value.tag = tool_name }
+            /* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+            /* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, ""}
         };
+		vec[1].filter_value.tag = tool_name;
 
         printf ("\t\t Tool %s:\n", tool_name);
         printf ("Path:\t");
@@ -67,17 +76,18 @@ list_error_info(rbc_xml_doc doc, const char * err_str_id)
 {
     if (err_str_id != NULL)
     {
-        rbc_xml_property_t prop =
-        {
-            .name = "id",
-            .value = err_str_id
-        };
+		/* .name = "id", .value = err_str_id */
+		rbc_xml_property_t prop = {"id", ""};
 
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "errors" },
-            { .filter = PROPERTY_NAME, .filter_value.property = prop }
+            /* .filter = TAG_NAME, .filter_value.tag = "errors" */
+			{TAG_NAME, "errors"},
+            /* .filter = PROPERTY_NAME, .filter_value.property = prop */
+			{PROPERTY_NAME, ""}
         };
+		prop.value = err_str_id;
+		vec[1].filter_value.property = prop;
 
         list_nodes(doc, vec, 2, display_err_sumary, display_err_header);
     }
@@ -93,9 +103,11 @@ create_tool(rbc_xml_doc doc, const char *tool_name,
     if (doc != NULL && doc->children != NULL &&
         tool_name != NULL && tool_path != NULL && tool_type != NULL)
     {
+		const char *count_string = "";
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "installed_tools" }
+           /* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"}
         };
 
        root = lookup_node(doc->children, vec, 1);
@@ -104,7 +116,7 @@ create_tool(rbc_xml_doc doc, const char *tool_name,
        xmlNewProp (new_node, (xmlChar *) "lib_path", (xmlChar *) tool_path);
        xmlNewProp (new_node, (xmlChar *) "type", (xmlChar *) tool_type);
 
-       const char *count_string = get_node_property(root, "count");
+       count_string = get_node_property(root, "count");
        if (count_string != NULL)
        {
            int count = atoi(count_string); count++;
@@ -136,19 +148,22 @@ register_error(rbc_xml_doc doc, const char *err_id, const char * tool_name)
     if (doc != NULL && doc->children != NULL &&
         tool_name != NULL && err_id != NULL)
     {
-        rbc_xml_property_t prop =
-        {
-            .name = "value",
-            .value = err_id
-        };
+		/* .name = "value", .value= err_id */
+		rbc_xml_property_t prop = {"value", ""};
 
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-            { .filter = TAG_NAME, .filter_value.tag = tool_name },
-            { .filter = TAG_NAME, .filter_value.tag = "errors" },
-            { .filter = PROPERTY_NAME, .filter_value.property = prop }
+            /* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+            /* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, "tool_name"},
+            /* .filter = TAG_NAME, .filter_value.tag = "errors" */
+			{TAG_NAME, "errors"},
+            /* .filter = PROPERTY_NAME, .filter_value.property = prop */
+			{PROPERTY_NAME, ""}
         };
+		prop.value = err_id;
+		vec[3].filter_value.property = prop;
 
         err_node = lookup_node(doc->children, vec, 3);
         // TODO:
@@ -156,11 +171,12 @@ register_error(rbc_xml_doc doc, const char *err_id, const char * tool_name)
 
         if (node == NULL)
         {
+			const char *value = "";
             status_code = 0;
             node = xmlNewTextChild (err_node, NULL, (xmlChar *) "add", NULL);
             xmlNewProp (node, (xmlChar *) "value", (xmlChar *) err_id);
 
-            const char *value = get_node_property(err_node, "err_count");
+            value = get_node_property(err_node, "err_count");
             if (value != NULL)
             {
                 int err_count = atoi(value); err_count++;
@@ -187,19 +203,22 @@ register_parameter(rbc_xml_doc doc, const char *tool_parameter, const char * too
     if (doc != NULL && doc->children != NULL &&
         tool_name != NULL && tool_parameter != NULL)
     {
-        rbc_xml_property_t prop =
-        {
-            .name = "value",
-            .value = tool_parameter
-        };
+		/* .name = "value" .value = tool_parameter */
+		rbc_xml_property_t prop = {"value", ""};
 
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-            { .filter = TAG_NAME, .filter_value.tag = tool_name },
-            { .filter = TAG_NAME, .filter_value.tag = "parameters" },
-            { .filter = PROPERTY_NAME, .filter_value.property = prop }
+			/* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+            /* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, "tool_name"},
+            /* .filter = TAG_NAME, .filter_value.tag = "parameters" */
+			{TAG_NAME, "paramteres"},
+            /* .filter = PROPERTY_NAME, .filter_value.property = prop */
+			{PROPERTY_NAME, ""}
         };
+		prop.value = tool_parameter;
+		vec[3].filter_value.property = prop;
 
         param_node = lookup_node(doc->children, vec, 3);
         // TODO:
@@ -207,12 +226,13 @@ register_parameter(rbc_xml_doc doc, const char *tool_parameter, const char * too
 
         if (node == NULL)
         {
+			const char *value = "";
             status_code = 0;
             
             node = xmlNewTextChild (param_node, NULL, (xmlChar *) "add", NULL);
             xmlNewProp (node, (xmlChar *) "value", (xmlChar *) tool_parameter);
 
-            const char *value = get_node_property(param_node, "param_count");
+            value = get_node_property(param_node, "param_count");
             if (value != NULL)
             {
                 int params_count = atoi(value);
@@ -242,8 +262,10 @@ inc_err_count (rbc_xml_doc doc)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "init" },
-            { .filter = TAG_NAME, .filter_value.tag =  "err_count" }
+            /* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+            /* .filter = TAG_NAME, .filter_value.tag =  "err_count" */
+			{TAG_NAME, "err_count"}
         };
 
         node = lookup_node(doc->children, vec, 2);
@@ -280,7 +302,8 @@ create_error(rbc_xml_doc doc, char * err_description)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "errors" }            
+            /* .filter = TAG_NAME, .filter_value.tag = "errors"*/
+			{TAG_NAME, "errors"}
         };
 
         node = lookup_node(doc->children, vec, 1);
@@ -315,9 +338,12 @@ add_static_parameter (rbc_xml_doc doc, const char * file_name)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "init" },
-            { .filter = TAG_NAME, .filter_value.tag = "input" },
-            { .filter = TAG_NAME, .filter_value.tag = "static"}
+            /* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+            /* .filter = TAG_NAME, .filter_value.tag = "input" */
+			{TAG_NAME, "input"},
+            /* .filter = TAG_NAME, .filter_value.tag = "static"*/
+			{TAG_NAME, "static"}
         };
 
         input_node = lookup_node(doc->children, vec, 2);
@@ -325,6 +351,7 @@ add_static_parameter (rbc_xml_doc doc, const char * file_name)
 
         if (input_node != NULL)
         {
+			const char *file_count = "";
             if (static_node == NULL)
             {
                 static_node = xmlNewTextChild (input_node, NULL, (xmlChar *) "static", NULL);
@@ -334,7 +361,7 @@ add_static_parameter (rbc_xml_doc doc, const char * file_name)
             new_node = xmlNewTextChild (static_node, NULL, (xmlChar *) "add", NULL);
             xmlNewProp (new_node, (xmlChar *) "value", (xmlChar *) file_name);
 
-            const char *file_count = get_node_property(static_node, "file_count");
+            file_count = get_node_property(static_node, "file_count");
             if (file_count != NULL)
             {
                 int file_count_val = atoi(file_count);
@@ -360,9 +387,12 @@ set_exec (rbc_xml_doc doc, const char * exec_name)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "init" },
-            { .filter = TAG_NAME, .filter_value.tag = "input" },
-            { .filter = TAG_NAME, .filter_value.tag = "dynamic"}
+            /* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+            /* .filter = TAG_NAME, .filter_value.tag = "input" */
+			{TAG_NAME, "input"},
+            /* .filter = TAG_NAME, .filter_value.tag = "dynamic" */
+			{TAG_NAME, "dynamic"}
         };
 
         input_node = lookup_node(doc->children, vec, 2);
@@ -412,20 +442,24 @@ add_dynamic_parameter (rbc_xml_doc doc, const char * parameter)
     {
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "init" },
-            { .filter = TAG_NAME, .filter_value.tag = "input" },
-            { .filter = TAG_NAME, .filter_value.tag = "dynamic"}
+            /* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+            /* .filter = TAG_NAME, .filter_value.tag = "input" */
+			{TAG_NAME, "input"},
+            /* .filter = TAG_NAME, .filter_value.tag = "dynamic"*/
+			{TAG_NAME, "dynamic"}
         };
 
         dynamic_node = lookup_node(doc->children, vec, 3);
 
         if (dynamic_node != NULL)
         {
+			const char *arg_count = "";
             temp_node = xmlNewTextChild (dynamic_node, NULL, (xmlChar *) "add", NULL);
             xmlNewProp (temp_node, (xmlChar *) "value", (xmlChar *) parameter);
 
             /* increment value the number of executable parameters */
-            const char *arg_count = get_node_property(dynamic_node, "arg_count");
+            arg_count = get_node_property(dynamic_node, "arg_count");
             if (arg_count != NULL)
             {
                 int argc = atoi(arg_count);
@@ -456,17 +490,18 @@ add_err_details (rbc_xml_doc doc,
         value != NULL && count != NULL &&
         type != NULL)
     {
-        rbc_xml_property_t prop =
-        {
-            .name = "id",
-            .value = err_id
-        };
+		/* .name = "id" , .value = err_id */
+		rbc_xml_property_t prop = {"id", ""};
 
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "errors" },
-            { .filter = PROPERTY_NAME, .filter_value.property = prop }
+            /* .filter = TAG_NAME, .filter_value.tag = "errors" */
+			{TAG_NAME, "errors"},
+            /* .filter = PROPERTY_NAME, .filter_value.property = prop*/
+			{PROPERTY_NAME, ""}
         };
+		prop.value = err_id;
+		vec[1].filter_value.property = prop;
 
         err_node = lookup_node(doc->children, vec, 2);
 
@@ -507,9 +542,22 @@ register_tool(rbc_xml_doc doc, const char *tool_name)
         /* check if the tool is installed */
         rbc_xml_filter_t vec[] =
         {
-            { .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-            { .filter = TAG_NAME, .filter_value.tag = tool_name }
+            /* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+            /* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, ""}
         };
+
+        rbc_xml_filter_t init_lookup[] =
+        {
+            /* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+            /* .filter = TAG_NAME, .filter_value.tag = "tools" */
+			{TAG_NAME, "tools"}
+        };
+		const char *count_string = "";
+
+		vec[1].filter_value.tag = tool_name;
 
         node = lookup_node(doc->children, vec, 2);
         if (node == NULL)
@@ -517,15 +565,6 @@ register_tool(rbc_xml_doc doc, const char *tool_name)
             fprintf(stderr, "Given tool is not installed: %s.\n", tool_name);
             goto exit;
         }
-
-        /* tool is installed */
-        /* now register the tool */
-        /* first find the correct position in the XML */
-        rbc_xml_filter_t init_lookup[] =
-        {
-            {.filter = TAG_NAME, .filter_value.tag = "init"},
-            {.filter = TAG_NAME, .filter_value.tag = "tools"}
-        };
 
         node = lookup_node(doc->children, init_lookup, 2);
         if (node == NULL)
@@ -538,7 +577,7 @@ register_tool(rbc_xml_doc doc, const char *tool_name)
          new_node = xmlNewTextChild (node, NULL, (xmlChar *) "add", NULL);
          xmlNewProp (new_node, (xmlChar *) "value", (xmlChar *) tool_name);
 
-         const char *count_string = get_node_property(node, "count");
+         count_string = get_node_property(node, "count");
          if (count_string != NULL)
          {
              int count = atoi(count_string); count++;
@@ -636,8 +675,10 @@ int set_libpenalty_info (rbc_xml_doc doc, const char *load, const char *lib_path
         {
             rbc_xml_filter_t vec[] =
             {
-                {.filter = TAG_NAME, .filter_value.tag = "init"},
-                {.filter = TAG_NAME, .filter_value.tag = "penalty"}
+                /* .filter = TAG_NAME, .filter_value.tag = "init" */
+				{TAG_NAME, "init"},
+                /* .filter = TAG_NAME, .filter_value.tag = "penalty" */
+				{TAG_NAME, "penalty"}
             };
 
             node = lookup_node(doc->children, vec, 2);

@@ -2,25 +2,56 @@ CC = cl
 CFLAGS = /nologo /W4 /EHsc /Za
 XML_PATH=C:\licenta\robocheck\lib-win
 
-DIR_SRC = src
-XML_SRC = config
+RBC_FILES = src\rbc_utils.c src\rbc_task.c src\rbc_api.c
+RBC_FILES_OBJ = rbc_utils.obj rbc_task.obj rbc_api.obj
+XML_FILES = config\rbc_xml_parser.c config\rbc_config.c
+XML_FILES_OBJ = rbc_xml_parser.obj rbc_config.obj
 
-RBC_FILES = rbc_utils.c rbc_task.c librobocheck.c rbc_api.c penalty.c
-XML_FILES = rbc_xml_parser.c rbc_config.c
+WRAPPER = wrapper
+WRAPPER_FILES = wrapper\dlfcn.c
+DLFCN = dlfcn.obj
 
-all: robocheck
-	
+UTILS_SRC = src\utils.c
+UTILS_OBJ = utils.obj
+
+LIB_XML = lib-win\libxml2.lib lib-win\iconv.lib  lib-win\libxslt.lib
+
+all: utils wrapper robocheck 
+	make_modules.bat build
+	$(CC) -Wall $(CFLAGS) /I. /I$(XML_PATH) /Femain main.c  libutils.lib $(LIB_XML) libpenalty.lib librobocheck.lib
+
+utils: $(UTILS_OBJ)
+	link /nologo /dll /out:libutils.dll /implib:libutils.lib $(UTILS_OBJ)
+
+utils.obj:
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /c /Fo$@ $(UTILS_SRC)
 
 robocheck: make_obj configure penalty
+	link /nologo /dll /out:librobocheck.dll /implib:librobocheck.lib librobocheck-export.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
+
+wrapper: $(DLFCN)
+
+$(DLFCN):
+	$(CC) /c /Fo$@ $(WRAPPER_FILES)
 
 make_obj:
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c $(XML_FILES) config\configure.c
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\librobocheck.c /Folibrobocheck-export.obj
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c src\librobocheck.c /Folibrobocheck-import.obj
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\penalty.c /Fopenalty-export.obj
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c src\penalty.c /Fopenalty-import.obj
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c $(RBC_FILES)
 
-configure:
+configure: configure.obj
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) configure.obj $(XML_FILES_OBJ) libutils.lib $(LIB_XML) /Feconfigure
 
-penalty:
+penalty: penalty.obj
+	link /nologo /dll /out:libpenalty.dll /implib:libpenalty.lib penalty-export.obj librobocheck-import.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
 
 clean:
 	del configure 2>NUL
 	del main 2>NUL
 	del *.obj 2>NUL
+
 	del *~ 2>NUL
+	del libutils.*

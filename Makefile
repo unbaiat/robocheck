@@ -26,7 +26,7 @@ QUIET_AR      = $(Q:@=@echo    '     AR       '$@;)
 QUIET_GEN     = $(Q:@=@echo    '     GEN      '$@;)
 QUIET_LINK    = $(Q:@=@echo    '     LINK     '$@;)
 
-UTILS_SRC = utils.c
+UTILS_SRC = src/utils.c
 UTILS_OBJ = utils.o
 
 .PHONY: clean all
@@ -42,7 +42,7 @@ utils: $(UTILS_OBJ)
 	-rm -f $(UTILS_OBJ)
 
 utils.o:
-	$(CC) $(CFLAGS) -c -o $@ src/utils.c
+	$(CC) $(CFLAGS) -c -o $@ $(UTILS_SRC)
 
 robocheck: make_obj configure penalty
 	$(QUIET_LINK) $(CC) $(XML_OBJ_FILES) $(RBC_OBJ_FILES) $(LIBRBC_FLAGS) $(SO_FLAGS) -o librobocheck.so

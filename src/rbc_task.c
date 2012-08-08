@@ -3,6 +3,14 @@
 #include <stdlib.h>
 
 #include "../lib/rbc_task.h"
+#include "../include/utils.h"
+
+#ifdef _WIN32
+	#ifndef popen
+		#define popen _popen
+		#define pclose _pclose
+	#endif
+#endif
 
 rbc_task_t *
 open_process (int argc, char **args, enum EN_rbc_access access)

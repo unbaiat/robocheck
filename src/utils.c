@@ -10,7 +10,7 @@
 static int 
 my_tolower(int c)
 {
-	int x;
+	int x = c;
 
 	if ('A' <= c && c >= 'Z')
 		x = 'a' + c - 'A';

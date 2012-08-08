@@ -1,9 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <string.h>
 
+#ifdef _WIN32
+#define INT32_MAX 2147483647
+#else
+#include <stdint.h>
+#endif
+
+#include "../include/utils.h"
 #include "../lib/penalty.h"
 
 static rbc_penalty_t **__penalties = NULL;
@@ -119,17 +126,19 @@ static int
 fill_penalty_array(void)
 {
 	int i, xml_err_count, ret_value = -1;
+
+	rbc_xml_filter_t vec[] =
+	{
+		/* .filter = TAG_NAME, .filter_value.tag = "errors" */
+		{TAG_NAME, "errors"}
+	};
+
 	rbc_xml_node node = NULL;
 
 	if (__doc == NULL) goto exit;
 
 	xml_err_count = get_xml_err_count();
 	if (xml_err_count == -1) goto exit;
-
-	rbc_xml_filter_t vec[] =
-	{
-		{.filter = TAG_NAME, .filter_value.tag = "errors"}
-	};
 
 	node = lookup_node(__doc->children, vec, 1);
 	if (node == NULL)
@@ -157,15 +166,19 @@ static int
 get_xml_err_count()
 {
 	int err_count = -1;
-	rbc_xml_node node = NULL;
-
-	if (__doc == NULL) goto exit;
+	const char *err_count_string = "";
 
 	rbc_xml_filter_t vec[] =
 	{
-		{.filter = TAG_NAME, .filter_value.tag = "init"},
-		{.filter = TAG_NAME, .filter_value.tag = "err_count"}
+		/* .filter = TAG_NAME, .filter_value.tag = "init" */
+		{TAG_NAME, "init"},
+		/* .filter = TAG_NAME, .filter_value.tag = "err_count" */
+		{TAG_NAME, "err_count"}
 	};
+
+	rbc_xml_node node = NULL;
+
+	if (__doc == NULL) goto exit;
 
 	node = lookup_node (__doc->children, vec, 2);
 	if (node == NULL)
@@ -174,7 +187,7 @@ get_xml_err_count()
 		goto exit;
 	}
 
-	const char *err_count_string = get_node_property(node, "value");
+	err_count_string = get_node_property(node, "value");
 	if (err_count_string != NULL)
 	{
 		err_count = atoi(err_count_string);
@@ -187,7 +200,7 @@ exit:
 static void
 create_err_mapping(rbc_xml_node node)
 {
-	int err_id, count = INT32_MAX;
+	int err_id = 0, count = INT32_MAX;
 	char *err_msg = NULL, *err_pen_msg = NULL;
 	rbc_xml_node child_node = NULL;
 
@@ -196,15 +209,18 @@ create_err_mapping(rbc_xml_node node)
 		child_node = get_next_node(get_child(node));
 		if (child_node != NULL)
 		{
+			const char *err_id_str = "";
+			const char *count_str = "";
+			rbc_penalty_t *mapping = (rbc_penalty_t *) malloc(sizeof (*mapping));
+
 			err_msg = (char *) get_node_property(node, "name");
-			const char *err_id_str = get_node_property(node, "id");
+			err_id_str = get_node_property(node, "id");
 			if (err_id_str != NULL) { err_id = atoi(err_id_str); }
 
 			err_pen_msg = (char *) get_node_property(child_node, "key");
-			const char *count_str = get_node_property(child_node, "count");
+			count_str = get_node_property(child_node, "count");
 			if (count_str != NULL && strcmp(count_str, "INF") != 0) { count = atoi(count_str); }
 
-			rbc_penalty_t *mapping = (rbc_penalty_t *) malloc(sizeof (*mapping));
 			if (mapping != NULL)
 			{
 				mapping->step = count;

@@ -1,9 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS 
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <dlfcn.h>
 
+#ifdef _WIN32
+	#include "../wrapper/dlfcn.h"
+#else
+	#include <dlfcn.h>
+#endif
+
+#include "../include/utils.h"
 #include "../include/librobocheck.h"
 
 
@@ -104,6 +111,17 @@ extract_static_input (rbc_xml_doc doc_ptr)
 
 	if (__static_ptr == NULL && doc_ptr != NULL) /* singleton */
 	{
+		rbc_xml_node node;
+		const char *f_count = "";
+		rbc_xml_filter_t vec[] = {
+			/* .filter = TAG_NAME, .filter_value.tag = "init"  */
+			{TAG_NAME, "init"},
+			/* .filter = TAG_NAME, .filter_value.tag = "input" */
+			{TAG_NAME, "input"},
+			/* .filter = TAG_NAME, .filter_value.tag = "static" */
+			{TAG_NAME, "static"}
+		};
+
 		__static_ptr = (struct rbc_static_input *)malloc(sizeof(struct rbc_static_input));
 		if (__static_ptr == NULL)
 		{
@@ -113,14 +131,7 @@ extract_static_input (rbc_xml_doc doc_ptr)
 
 		__static_ptr->file_names = NULL;
 
-		rbc_xml_filter_t vec[] =
-        	{
-			{ .filter = TAG_NAME, .filter_value.tag = "init" },
-			{ .filter = TAG_NAME, .filter_value.tag = "input"},
-			{ .filter = TAG_NAME, .filter_value.tag = "static"}
-		};
-
-		rbc_xml_node node = lookup_node(__root->children, vec, 3);
+		node = lookup_node(__root->children, vec, 3);
 		if (node == NULL)
 		{
 			log_message("Invalid format for XML config file.\n", NULL);
@@ -128,7 +139,7 @@ extract_static_input (rbc_xml_doc doc_ptr)
 		}
 
 		/* get file count */
-		const char *f_count = get_node_property(node, "file_count");
+		f_count = get_node_property(node, "file_count");
 		__static_ptr->file_count = (f_count != NULL) ? atoi(f_count) : 0;
 
 		/* get file names (if any available) */
@@ -159,11 +170,13 @@ extract_error_count(rbc_xml_doc doc_ptr)
 {
 	if (doc_ptr != NULL && __rbc_err_count < 0)
 	{
-		rbc_xml_filter_t vec[] =
-        	{
-			{ .filter = TAG_NAME, .filter_value.tag = "init" },
-			{ .filter = TAG_NAME, .filter_value.tag = "err_count"}
+		rbc_xml_filter_t vec[] = {
+			/* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+			/* .filter = TAG_NAME, .filter_value.tag = "err_count" */
+			{TAG_NAME, "err_count"}
 		};
+		const char *value = "";
 
 		rbc_xml_node node = lookup_node(__root->children, vec, 2);
 		if (node == NULL)
@@ -172,7 +185,7 @@ extract_error_count(rbc_xml_doc doc_ptr)
 			goto exit;
 		}
 
-		const char *value = get_node_property(node, "value");
+		value = get_node_property(node, "value");
 		if (value != NULL)
 		{
 			__rbc_err_count = atoi(value);
@@ -190,6 +203,17 @@ extract_dynamic_input (rbc_xml_doc doc_ptr)
 
 	if (__dynamic_ptr == NULL && doc_ptr != NULL) /* singleton */
 	{
+		rbc_xml_filter_t vec[] = {
+			/* .filter = TAG_NAME, .filter_value.tag = "init" */
+			{TAG_NAME, "init"},
+			/* .filter = TAG_NAME, .filter_value.tag = "input" */
+			{TAG_NAME, "input"},
+			/* .filter = TAG_NAME, .filter_value.tag = "dynamic" */
+			{TAG_NAME, "dynamic"}
+		};
+		rbc_xml_node node;
+		const char *argc = "";
+
 		__dynamic_ptr = (struct rbc_dynamic_input *)malloc(sizeof(struct rbc_dynamic_input));
 		if (__dynamic_ptr == NULL)
 		{
@@ -199,14 +223,7 @@ extract_dynamic_input (rbc_xml_doc doc_ptr)
 
 		__dynamic_ptr->params = NULL;
 
-		rbc_xml_filter_t vec[] =
-        	{
-			{ .filter = TAG_NAME, .filter_value.tag = "init" },
-			{ .filter = TAG_NAME, .filter_value.tag = "input" },
-			{ .filter = TAG_NAME, .filter_value.tag = "dynamic"}
-		};
-
-		rbc_xml_node node = lookup_node(__root->children, vec, 3);
+		node = lookup_node(__root->children, vec, 3);
 		if (node == NULL)
 		{
 			log_message("Invalid format for XML config file.\n", NULL);
@@ -224,7 +241,7 @@ extract_dynamic_input (rbc_xml_doc doc_ptr)
 		}
 
 		/* get argc */
-		const char *argc = get_node_property(node, "arg_count");
+		argc = get_node_property(node, "arg_count");
 		__dynamic_ptr->params_count = (argc != NULL) ? atoi(argc) : 0;
 
 		/* get argv (if any available) */
@@ -260,14 +277,19 @@ extract_tool_errset (rbc_xml_doc doc_ptr, const char * tool_name)
 
 	if (doc_ptr != NULL && tool_name)
 	{
-		RESET(tool_errs);
-		
-		rbc_xml_filter_t vec[] =
-        	{
-			{ .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-			{ .filter = TAG_NAME, .filter_value.tag = tool_name},
-			{ .filter = TAG_NAME, .filter_value.tag = "errors"}
+		rbc_xml_filter_t vec[] = {
+			/* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+			/* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, ""},
+			/* .filter = TAG_NAME, .filter_value.tag = "errors" */
+			{TAG_NAME, "errors"}
 		};
+		const char *err_count_string = "";
+
+		vec[1].filter_value.tag = tool_name;
+
+		RESET(tool_errs);
 		
 		tool_node = lookup_node(__root->children, vec, 3);
 		if (tool_node == NULL)
@@ -277,7 +299,7 @@ extract_tool_errset (rbc_xml_doc doc_ptr, const char * tool_name)
 			goto exit;
 		}
 
-		const char *err_count_string = get_node_property(tool_node, "err_count");
+		err_count_string = get_node_property(tool_node, "err_count");
 		tool_err_count = (err_count_string != NULL) ? atoi(err_count_string) : 0;
 
 		err_node = get_next_node(get_child(tool_node));
@@ -370,11 +392,14 @@ run_robocheck()
 	int i, tool_count = 0, err_count;
 	rbc_xml_node tool_node = NULL, current_tool_node = NULL;
 	struct rbc_output *output = NULL;
+	const char *tool_count_str = "";
 
 	rbc_xml_filter_t vec[] =
 	{
-		{ .filter = TAG_NAME, .filter_value.tag = "init" },
-		{ .filter = TAG_NAME, .filter_value.tag = "tools" }
+		/* .filter = TAG_NAME, .filter_value.tag = "init" */
+		{TAG_NAME, "init"},
+		/* .filter = TAG_NAME, .filter_value.tag = "tools" */
+		{TAG_NAME, "tools"}
 	};
 
 	tool_node = lookup_node(__root->children, vec, 2);
@@ -385,7 +410,7 @@ run_robocheck()
 	}
 
 	/* extract tool count */
-	const char *tool_count_str = get_node_property(tool_node, "count");
+	tool_count_str = get_node_property(tool_node, "count");
 	tool_count = (tool_count_str != NULL) ? atoi(tool_count_str) : 0; 
 
 	/* for each registered tool */
@@ -393,30 +418,40 @@ run_robocheck()
 	for (i = 0; i < tool_count; i++)
 	{
 		const char *tool_name = get_node_property(current_tool_node, "value");
-		if (tool_name == NULL)
-		{
-			continue;
-		}
 
 		rbc_xml_filter_t vec[] =
 		{
-			{ .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-			{ .filter = TAG_NAME, .filter_value.tag = tool_name }
+			/* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+			{TAG_NAME, "installed_tools"},
+			/* .filter = TAG_NAME, .filter_value.tag = tool_name */
+			{TAG_NAME, ""}
 		};				
+		const char *lib_path = "";
+		const char *type = "";
+		rbc_errset_t errset;
+		enum EN_tool_type tool_type;
+		struct rbc_input *input = NULL;
+		rbc_xml_node current_tool;
 
-		rbc_xml_node current_tool = lookup_node(__root->children, vec, 2);
+		vec[1].filter_value.tag = tool_name;
+
+		if (tool_name == NULL) {
+			continue;
+		}
+
+		current_tool = lookup_node(__root->children, vec, 2);
 		if (current_tool == NULL)
 		{
 			continue;
 		}
 
-		const char *lib_path = get_node_property(current_tool, "lib_path");
-		const char *type = get_node_property(current_tool, "type");		
+		lib_path = get_node_property(current_tool, "lib_path");
+		type = get_node_property(current_tool, "type");		
 
-		rbc_errset_t errset = extract_tool_errset(__root, tool_name);
+		errset = extract_tool_errset(__root, tool_name);
 
-		enum EN_tool_type tool_type = get_type(type);
-		struct rbc_input *input = extract_tool_input(tool_name, tool_type);
+		tool_type = get_type(type);
+		input = extract_tool_input(tool_name, tool_type);
 
 		output = load_module(input, errset, &err_count, lib_path, "run_tool");
 		add_range(output);
@@ -456,10 +491,15 @@ extract_tool_input(const char *tool_name, enum EN_tool_type tool_type)
 	rbc_xml_node param_node = NULL, current_param_node = NULL;
 	rbc_xml_filter_t vec[] =
 	{
-		{ .filter = TAG_NAME, .filter_value.tag = "installed_tools" },
-		{ .filter = TAG_NAME, .filter_value.tag = tool_name },
-		{ .filter = TAG_NAME, .filter_value.tag = "parameters" }
+		/* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
+		{TAG_NAME, "installed_tools"},
+		/* .filter = TAG_NAME, .filter_value.tag = tool_name  */
+		{TAG_NAME, ""},
+		/* .filter = TAG_NAME, .filter_value.tag = "parameters" */
+		{TAG_NAME, "parameters"}
 	};
+	const char *param_count_str = "";
+	vec[1].filter_value.tag = tool_name;
 
 	input = (struct rbc_input *) malloc(sizeof(struct rbc_input));
 	if (input == NULL)
@@ -486,7 +526,7 @@ extract_tool_input(const char *tool_name, enum EN_tool_type tool_type)
 		goto exit;
 	}
 
-	const char *param_count_str = get_node_property(param_node, "param_count");
+	param_count_str = get_node_property(param_node, "param_count");
 	param_count = (param_count_str != NULL) ? atoi(param_count_str) : 0;
 
 	input->tool_args = (const char **) malloc(sizeof(const char *) * param_count);
@@ -592,9 +632,12 @@ check_libpenalty(char **lib_path)
 	rbc_xml_node node = NULL;
 	rbc_xml_filter_t vec[] =
 	{
-		{ .filter = TAG_NAME, .filter_value.tag = "init" },
-		{ .filter = TAG_NAME, .filter_value.tag = "penalty" }
+		/* .filter = TAG_NAME, .filter_value.tag = "init"  */
+		{TAG_NAME, "init"},
+		/* .filter = TAG_NAME, .filter_value.tag = "penalty" */
+		{TAG_NAME, "penalty"}
 	};
+	const char *load = "";
 
 	if (__root == NULL) goto exit;
 
@@ -608,7 +651,7 @@ check_libpenalty(char **lib_path)
 	}
 
 	ret_value = 0;
-	const char *load = get_node_property(node, "load");
+	load = get_node_property(node, "load");
 	if (strcmp(load, "true") == 0)
 	{
 		*lib_path = (char *) get_node_property(node, "lib_path");
@@ -660,9 +703,10 @@ add_range(struct rbc_output *output)
 		{
 			if ((__output_size + 1) % ALLOC_INC == 0)
 			{
+				struct rbc_output **temp_output = NULL;
 				__output_inc_count++;
 
-				struct rbc_output **temp_output = (struct rbc_output **) realloc (__output, __output_inc_count * sizeof(struct rbc_output *));
+				temp_output = (struct rbc_output **) realloc (__output, __output_inc_count * sizeof(struct rbc_output *));
 				if (temp_output != NULL)
 				{
 					__output = temp_output;
