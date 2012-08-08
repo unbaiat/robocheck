@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Clean old errors
-#cp lib/rbc_err_codes.h.bk lib/rbc_err_codes.h
-
 echo -e "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" > rbc_config.xml
 echo -e "<appSettings>\n" >> rbc_config.xml
 echo -e "  <init output=\"NULL\">\n" >> rbc_config.xml

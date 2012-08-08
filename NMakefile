@@ -27,7 +27,7 @@ utils.obj:
 	$(CC) $(CFLAGS) /DDLL_EXPORTS /c /Fo$@ $(UTILS_SRC)
 
 robocheck: make_obj configure penalty
-	link /nologo /dll /out:librobocheck.dll /implib:librobocheck.lib librobocheck-export.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
+	link /nologo /dll /out:librobocheck.dll /implib:librobocheck.lib librobocheck.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
 
 wrapper: $(DLFCN)
 
@@ -36,22 +36,21 @@ $(DLFCN):
 
 make_obj:
 	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c $(XML_FILES) config\configure.c
-	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\librobocheck.c /Folibrobocheck-export.obj
-	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c src\librobocheck.c /Folibrobocheck-import.obj
-	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\penalty.c /Fopenalty-export.obj
-	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c src\penalty.c /Fopenalty-import.obj
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\librobocheck.c /Folibrobocheck.obj
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I. /I$(XML_PATH) /c src\penalty.c /Fopenalty.obj
 	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c $(RBC_FILES)
 
 configure: configure.obj
 	$(CC) $(CFLAGS) /I. /I$(XML_PATH) configure.obj $(XML_FILES_OBJ) libutils.lib $(LIB_XML) /Feconfigure
 
 penalty: penalty.obj
-	link /nologo /dll /out:libpenalty.dll /implib:libpenalty.lib penalty-export.obj librobocheck-import.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
+	link /nologo /dll /out:libpenalty.dll /implib:libpenalty.lib penalty.obj librobocheck.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
 
 clean:
 	del configure 2>NUL
 	del main 2>NUL
 	del *.obj 2>NUL
-
 	del *~ 2>NUL
-	del libutils.*
+	del *.dll 2>NUL
+	del *.lib 2>NUL
+	del *.exp 2>NUL
