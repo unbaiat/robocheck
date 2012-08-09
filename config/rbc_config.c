@@ -156,13 +156,14 @@ register_error(rbc_xml_doc doc, const char *err_id, const char * tool_name)
             /* .filter = TAG_NAME, .filter_value.tag = "installed_tools" */
 			{TAG_NAME, "installed_tools"},
             /* .filter = TAG_NAME, .filter_value.tag = tool_name */
-			{TAG_NAME, "tool_name"},
+			{TAG_NAME, ""},
             /* .filter = TAG_NAME, .filter_value.tag = "errors" */
 			{TAG_NAME, "errors"},
             /* .filter = PROPERTY_NAME, .filter_value.property = prop */
 			{PROPERTY_NAME, ""}
         };
 		prop.value = err_id;
+		vec[1].filter_value.tag = tool_name;
 		vec[3].filter_value.property = prop;
 
         err_node = lookup_node(doc->children, vec, 3);
