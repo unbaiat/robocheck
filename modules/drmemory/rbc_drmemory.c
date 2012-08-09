@@ -285,6 +285,8 @@ static void remove_output_dir (char *name)
 	memset(dir, 0, LINE_MAX);
 
 #ifdef _WIN32
+	/* Close opened notepad */
+	system("taskkill /f /im notepad.exe >NUL 2>NUL");
 	slash = strrchr(name, '\\');
 #else
 	slash = strrchr(name, '/');
