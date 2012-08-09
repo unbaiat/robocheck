@@ -24,7 +24,7 @@
 #define LINE_MAX 512
 #define MSG_SIZE 2048
 #define SEPARATORS " :()\r\n\t"
-#define ASSIGN_SEPARATORS " ,:\r\n"
+#define ASSIGN_SEPARATORS " ,:\r\n()"
 #ifdef _WIN32
 	#define DEFAULT_CMD "c:\\splint-3.1.1\\bin\\splint.exe "
 #else
@@ -134,6 +134,11 @@ get_info(char *line,int case_static,struct rbc_output **output,enum EN_err_type 
 	l_number = strtok(NULL, SEPARATORS);
 	if (l_number == NULL) 
 		return;
+
+#ifdef _WIN32
+	l_number = strtok(l_number, ",");
+#endif
+
 	if (case_static || function == NULL){
 		strcpy(error_message, "In file ");
 	}
