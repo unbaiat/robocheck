@@ -324,33 +324,32 @@ exit:
 struct rbc_output *
 load_module(struct rbc_input *input, rbc_errset_t flags, int *err_count, const char * libmodule, const char *func_name)
 {
-        char *error, buff[1024] = {0}, *tool_name = NULL;
+	char *error, buff[1024] = {0}, *tool_name = NULL;
 	void *handle;
 	struct rbc_output *output = NULL;
-        struct rbc_output * (* run_tool_ptr) (struct rbc_input *, rbc_errset_t flags, int *);
+	struct rbc_output * (* run_tool_ptr) (struct rbc_input *, rbc_errset_t flags, int *);
 
-	tool_name = strrchr(libmodule, '/');
+	tool_name = strrchr(libmodule, '\\');
 	tool_name = (tool_name != NULL) ? tool_name + 1 : (char *)libmodule;
 	sprintf(buff, "Attempting to run tool: '%s'", tool_name);
-	log_message(buff, NULL);
+	log_message(buff, stderr);
 
-        handle = dlopen (libmodule, RTLD_LAZY);
-        if (!handle)
+	handle = dlopen (libmodule, RTLD_LAZY);
+	if (!handle)
 	{
-		log_message (dlerror(), NULL);
-
+		log_message (dlerror(), stderr);
 		fprintf(stderr, "Failed loading module %s.\n", libmodule);
 		goto exit_function;
-        }
+	}
 
-        run_tool_ptr = dlsym(handle, func_name);
-        if ((error = dlerror()) != NULL)
+	run_tool_ptr = dlsym(handle, func_name);
+	if ((error = dlerror()) != NULL)
 	{
-		log_message (error, NULL);
+		log_message (error, stderr);
 
 		fprintf(stderr, "Failed loading symbol %s from module %s.\n", func_name, libmodule);
 		goto exit_function;
-        }
+	}
 	
 	*err_count = 0;
 	if (run_tool_ptr != NULL)
@@ -360,13 +359,13 @@ load_module(struct rbc_input *input, rbc_errset_t flags, int *err_count, const c
 		set_robocheck_module();
 	}
 
-        dlclose(handle);
+	dlclose(handle);
 
 exit_function:
 	if (output == NULL)
 	{
 		sprintf(buff, "Running shared object '%s' returned NULL output.\n", libmodule);
-		log_message(buff, NULL);
+		log_message(buff, stderr);
 	}
 
 	return output;

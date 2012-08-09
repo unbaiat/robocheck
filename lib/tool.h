@@ -10,6 +10,14 @@
 	#ifndef inline
 		#define inline
 	#endif
+	#ifdef DLL_EXPORTS
+		#define DLL_DECLSPEC __declspec(dllexport)
+	#endif
+	#ifndef DLL_EXPORTS
+		#define DLL_DECLSPEC __declspec(dllimport)
+	#endif
+#else
+	#define DLL_DECLSPEC
 #endif
 
 enum EN_tool_type
@@ -40,7 +48,7 @@ struct rbc_output
 };
 
 
-struct rbc_output *
+DLL_DECLSPEC struct rbc_output *
 run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count);
 
 /*

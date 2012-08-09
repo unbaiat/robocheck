@@ -13,7 +13,7 @@ all: compile
 compile: $(FILES_OBJ)
 
 rbc_drmemory.obj:
-	$(CC) $(CFLAGS) /I$(XML_PATH) /c /Fo$@ $(FILES)
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I$(XML_PATH) /c /Fo$@ $(FILES)
 	
 clean:
 	del $(FILES_OBJ) utils.obj libutils.dll libutils.lib
