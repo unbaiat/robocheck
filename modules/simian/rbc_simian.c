@@ -9,7 +9,8 @@
  * can be adjusted.
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 10.07.2011
+ * (C) 2012, Laura Vasilescu <laura@rosedu.org>
+ *              * last review 09.08.2012
  */
 
 #include <stdio.h>
@@ -63,9 +64,10 @@ print_list(struct rbc_output *list){
  */
 
 struct rbc_output *
-run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
-	char command[LINE_MAX]=DEFAULT_CMD;
-	char line[LINE_MAX],message[MSG_SIZE],*p;	
+run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
+{
+	char command[LINE_MAX] = DEFAULT_CMD;
+	char line[LINE_MAX], message[MSG_SIZE], *p;
 	struct rbc_static_input *static_input = NULL;
 	struct rbc_output *output = NULL;
 	struct rbc_output node;
@@ -74,76 +76,56 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 
 	if (!ISSET_ERR(ERR_DUPLICATE_CODE, flags))
 		return NULL;
-	node.err_msg = NULL;
+
+	node.err_msg = 0x01;
 	*err_count = 0;
-	if (input != NULL && input->input_ptr!=NULL && input->tool_type == STATIC_TOOL){
-		
+
+	if (input != NULL && input->input_ptr!=NULL && input->tool_type == STATIC_TOOL) {
 		static_input = (struct rbc_static_input *) input->input_ptr;
-		for(i=0;i<input->args_count;i++){
-			strcat(command,SPACE);
-			strcat(command,input->tool_args[i]);
+		for (i = 0; i < input->args_count; i++) {
+			strcat(command, SPACE);
+			strcat(command, input->tool_args[i]);
 		}
-		for(i=0;i<static_input->file_count;i++){
-			strcat(command,SPACE);
-			strcat(command,static_input->file_names[i]);
+		for (i = 0; i < static_input->file_count; i++) {
+			strcat(command, SPACE);
+			strcat(command, static_input->file_names[i]);
 		}
 			
-		strcat(command,OUTPUT);
+		strcat(command, OUTPUT);
 		system(command);
 
-		f=fopen(OUTPUT_FILE,"rt");
-		if (f==NULL){
+		f = fopen(OUTPUT_FILE, "rt");
+		if (f == NULL) {
 			return NULL;
-		}	
-		while (fgets(line, LINE_MAX, f) != NULL){
-			if (strstr(line,"Found") && node.err_msg != NULL){
+		}
+		while (fgets(line, LINE_MAX, f) != NULL) {
+			if (strstr(line, "Found") && node.err_msg == NULL) {
 				node.err_msg = strdup(message);
 				node.err_type = ERR_DUPLICATE_CODE;
-				add(&output,node);
+				add(&output, node);
+				node.err_msg = 0x01;
 			}
-			if (strstr(line,"duplicate lines in the following files:")){				
-				p = strtok(line," \n\t");
-				if (p == NULL) 
-					continue;
-				p = strtok(NULL," \n\t");
-				if (p == NULL) 
-					continue;
-				strcpy(message,"");
+			if (strstr(line, "duplicate lines in the following files:") &&
+					node.err_msg == 0x01) {
+				node.err_msg = NULL;
+				memset(message, 0, MSG_SIZE);
+				strcpy(message, "Duplicate lines:");
 				continue;
 			}
-				
-			if (strstr(line," Between lines")){
-				p = NULL;
-				p = strchr(line,'/');
-				if (p == NULL){
-					p = strstr(line,"C:\\");
-				}
-				if (p == NULL){
-					p = strstr(line,"c:\\");
-				}
-				if (p == NULL)
-					continue;
-				strncat(message,line,p-line);
-				p = strrchr(line,'/');
-				if (p == NULL){
-					p = strrchr(line,'\\');
-				}
-				if (p == NULL)
-					continue;
-				strcat(message,p+1);
-				
+			if (strstr(line, "Between lines") && node.err_msg == NULL) {
+				int from, to;
+			        char name[MSG_SIZE];
+
+				memset(name, 0, MSG_SIZE);
+				sscanf(line, " Between lines %d and %d in %s\n", &from, &to, name);
+				sprintf(message + strlen(message), " %s[%d-%d] ", name, from, to);
 			}
-				
-				
-			
 
 		}
 		fclose(f);
-		//print_list(output);
+		print_list(output);
 		system(RM_OUTPUT);
-		
 	}
 
-	
 	return output;
 }

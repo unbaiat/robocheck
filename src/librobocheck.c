@@ -780,17 +780,8 @@ free_output_vector()
 		{
 			if (__output[i] != NULL)
 			{
-				/* FIXME: */
-				/*if (__output[i]->aux_info != NULL && 
-				    __output[start]->aux_info != NULL
-				    __output[i]->err_type != __output[start]->err_type)
-				{
-					free (__output[start]->aux_info);
-					__output[start]->aux_info = NULL;
-					start = i;
-				}*/
-
-				free (__output[i]); __output[i] = NULL;
+				free (__output[i]);
+				__output[i] = NULL;
 			}
 		}
 
@@ -840,10 +831,69 @@ json_output_error(struct rbc_out_info *info)
 }
 
 static void
+transform_file_name(char *msg)
+{
+	char *name, *p, *aux, *file;
+	char **file_view = NULL;
+	int i, len, code = 0, name_len = 0, num_view = 0;
+
+	len = strlen(msg);
+	for (i = 0; i < __static_ptr->file_count; i++) {
+		aux = strdup(msg);
+		name = __static_ptr->file_names[i];
+		name_len = strlen(name);
+
+		file = strstr(aux, name);
+		if (file == NULL) {
+			continue;
+		}
+
+		/* Number of files in line */
+		file = aux;
+		while (1) {
+			file = strstr(file + name_len, name);
+			if (file == NULL)
+				break;
+			file_view = realloc(file_view, (num_view + 1) * sizeof(char *));
+			file_view[num_view] = file;
+			num_view++;
+		}
+
+		p = strtok(aux, " ");
+		memset(msg, 0, len);
+		code = 1;
+		while (1) {
+			if (code == 1 && num_view > 0) {
+				code = 0;
+				file = file_view[0];
+			}
+			if ((code == 1) || (p + strlen(p) < file && code == 0)) {
+				strcat(msg, p);
+				strcat(msg, " ");
+			} else {
+				char *pp = strstr(p, name);
+				code = 1;
+				strcat(msg, name);
+				num_view--;
+				strcat(msg, pp + name_len);
+				strcat(msg, " ");
+			}
+			p = strtok(NULL, " ");
+			if (p == NULL)
+				break;
+		}
+		num_view = 0;
+		free(file_view);
+		free(aux);
+	}
+}
+
+static void
 json_output_error_message(char *msg, int code)
 {
 	msg = strdup(msg);
 	trim_whitespace(msg);
+	transform_file_name(msg);
 	fprintf(stdout, "\t\t\t\t{ \"line\" : \"%s\" }", msg);
 	free(msg);
 
