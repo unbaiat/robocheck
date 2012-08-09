@@ -284,13 +284,23 @@ static void remove_output_dir (char *name)
 	memset(command, 0, LINE_MAX);
 	memset(dir, 0, LINE_MAX);
 
+#ifdef _WIN32
+	slash = strrchr(name, '\\');
+#else
 	slash = strrchr(name, '/');
+#endif
 	strncpy(dir, name, slash - name);
 
+#ifdef _WIN32
+	strcat(command, "rmdir /q /s ");
+#else
 	strcat(command, "rm -r ");
+#endif
 	strcat(command, dir);
+	
+	printf("COMMAND: %s\n", command);
 
-	system(command);
+	//system(command);
 }
 
 static void
@@ -398,7 +408,7 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 		fclose(results);
 
 		/* Remove output directory. */
-		//remove_output_dir(name);
+		remove_output_dir(name);
 
 		free(name);
 	}
