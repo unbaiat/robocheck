@@ -297,10 +297,8 @@ static void remove_output_dir (char *name)
 	strcat(command, "rm -r ");
 #endif
 	strcat(command, dir);
-	
-	printf("COMMAND: %s\n", command);
 
-	//system(command);
+	system(command);
 }
 
 static void
