@@ -141,6 +141,6 @@ NAME=sparse
 ./configure --register-error 18 $NAME
 
 # Input configuration
-./configure --set-executable ./tests/complex
-./configure --add-static-parameter tests/complex_test.c
+./configure --set-executable ./tests/simple
+./configure --add-static-parameter tests/simple.c
 ./configure --set-penalty-info true libpenalty.so
