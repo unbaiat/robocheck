@@ -159,49 +159,48 @@ get_info(char *line,int case_static,struct rbc_output **output,enum EN_err_type 
  * returns: 1- true/0 -false
  * param1: line = output line that will be parsed
  */
-
 static int
-is_signed_unsigned(char *line){
-	char *p,*left,*right;
-	int count_unsigned =0;
-	int i; 
-	int limit = 0;
-	if (strstr(line,"Assignment of")){
-		limit = 5;
-        }
-	else limit = 8;
+is_signed_unsigned (char *line)
+{
+	char *p, *left, *right;
+	int count_unsigned = 0, limit = 0, i;
+
+	limit = (strstr(line, "Assignment of")) ? 5 : 8;
 		
 	p = strtok(line, ASSIGN_SEPARATORS);
 	if (p == NULL)
 		return 0;
-	for (i=0;i<limit;i++){
+
+	for (i = 0; i < limit; i++) {
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
 			return 0;
 	}
-	if (strcmp(p,"unsigned") == 0){
-		count_unsigned ++;
+
+	if (strcmp(p, "unsigned") == 0) {
+		count_unsigned++;
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
 			return 0;
 	}
+
 	left = p;
-	for (i=0;i<2;i++){
+	for (i = 0; i < 2; i++) {
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
 			return 0;
 	}
 
-	if (strcmp(p,"unsigned") == 0){
-		count_unsigned ++;
+	if (strcmp(p,"unsigned") == 0) {
+		count_unsigned++;
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
 			return 0;
 	}
+
 	right = p;
-	return (strcmp(right,left) == 0 
-		&& count_unsigned == 1);
 
+	return (strcmp(right,left) != 0 && count_unsigned == 1);
 }
 
 /*
@@ -219,25 +218,31 @@ is_signed_unsigned(char *line){
  */
 
 struct rbc_output *
-run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
-	char line[LINE_MAX],scd_line[LINE_MAX];
-	char assignments[2*LINE_MAX];	
+run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
+{
+	char line[LINE_MAX], scd_line[LINE_MAX];
+	char assignments[2*LINE_MAX];
 	char command[LINE_MAX]=DEFAULT_CMD;
+
 	struct rbc_static_input *static_input = NULL;
 	struct rbc_output *output = NULL;
 	struct rbc_output node;
+
 	FILE *f;
 	int i;
+
 	*err_count = 0;
 	node.err_msg = NULL;
-	if (input != NULL  && input->input_ptr != NULL && input->tool_type == STATIC_TOOL){
+
+	if (input != NULL && input->input_ptr != NULL &&
+			input->tool_type == STATIC_TOOL) {
 		static_input = (struct rbc_static_input *) input->input_ptr;
-		for(i=0;i<input->args_count;i++){
+		for (i = 0; i < input->args_count; i++) {
 			strcat(command,SPACE);
 			strcat(command,input->tool_args[i]);
 		}
 
-		for(i=0;i<static_input->file_count;i++){
+		for (i = 0; i < static_input->file_count; i++) {
 			strcat(command,SPACE);
 			strcat(command,static_input->file_names[i]);
 		}
@@ -245,54 +250,51 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 		strcat(command,OUTPUT);
 		system(command);
 
-		f=fopen(OUTPUT_FILE,"rt");
-		if (f==NULL){
+		f = fopen(OUTPUT_FILE, "rt");
+		if (f == NULL) {
 			return NULL;
-		}	
+		}
 
-		while (fgets(line, LINE_MAX, f) != NULL){
-			if (strstr(line,"(in function")){
+		while (fgets(line, LINE_MAX, f) != NULL) {
+			if (strstr(line, "(in function")) {
 				get_function(line);
 				continue;
 			}
-			if (ISSET_ERR(ERR_STATIC_VARIABLE, flags)
-				&& (strstr(line,"Variable exported but not used")
-				|| strstr(line,"Function exported but not used"))	
-				){
-				get_info(line,1,&output,ERR_STATIC_VARIABLE);
+			if (ISSET_ERR(ERR_STATIC_VARIABLE, flags) &&
+					(strstr(line,"Variable exported but not used") ||
+					 strstr(line,"Function exported but not used"))) {
+				get_info(line, 1, &output, ERR_STATIC_VARIABLE);
 				continue;
 			}
-			if (ISSET_ERR(ERR_MEMORY_LEAK, flags)
-				&& strstr(line,"Fresh storage")
-				&& strstr(line,"created")){
-				get_info(line,0,&output,ERR_MEMORY_LEAK);
+			if (ISSET_ERR(ERR_MEMORY_LEAK, flags) &&
+					strstr(line,"Fresh storage") &&
+					strstr(line,"created")) {
+				get_info(line, 0, &output, ERR_MEMORY_LEAK);
 				continue;
 			}
-			if (ISSET_ERR(ERR_UNINITIALIZED, flags)
-				&& strstr(line,"used before definition")){
-				get_info(line,0,&output,ERR_UNINITIALIZED);
+			if (ISSET_ERR(ERR_UNINITIALIZED, flags) &&
+					strstr(line,"used before definition")) {
+				get_info(line, 0, &output, ERR_UNINITIALIZED);
 				continue;
 			}
-			if (ISSET_ERR(ERR_INVALID_ACCESS, flags)
-				&& (strstr(line,"Likely out-of-bounds")
-				|| strstr(line,"Possible out-of-bounds"))
-				){
-				get_info(line,0,&output,ERR_INVALID_ACCESS);
+			if (ISSET_ERR(ERR_INVALID_ACCESS, flags) &&
+					(strstr(line,"Likely out-of-bounds") ||
+					 strstr(line,"Possible out-of-bounds"))) {
+				get_info(line, 0, &output, ERR_INVALID_ACCESS);
 				continue;
 			}
-			if (ISSET_ERR(ERR_SIGNED_UNSIGNED, flags)
-				&& ( strstr(line,"Assignment of")
-				|| ( strstr(line,"initialized to type") && strstr(line,"expects"))
-				)){
-				strcpy(assignments,line);
+			if (ISSET_ERR(ERR_SIGNED_UNSIGNED, flags) &&
+					(strstr(line,"Assignment of") ||
+					 	(strstr(line,"initialized to type") &&
+						 strstr(line,"expects")))) {
+				strcpy(assignments, line);
 				if (fgets(scd_line, LINE_MAX, f) != NULL)
-					strcat(assignments,scd_line);
-				if (is_signed_unsigned (assignments))
-					get_info(line,0,&output,ERR_SIGNED_UNSIGNED);
+					strcat(assignments, scd_line);
+				if (is_signed_unsigned(assignments)) {
+					get_info(line, 0, &output, ERR_SIGNED_UNSIGNED);
+				}
 				continue;
 			}
-			
-		
 		}
 
 		fclose(f);

@@ -686,8 +686,9 @@ check_for_duplicates (struct rbc_output *output)
 	for (i = 0; i < __output_size; i++) {
 		if (output->err_type == __output[i]->err_type 
 		    && output->err_msg != NULL && __output[i]->err_msg != NULL
-		    && cmp_msg_file(output->err_msg, __output[i]->err_msg))
+		    && cmp_msg_file(output->err_msg, __output[i]->err_msg)) {
 			return 1;
+		}
 	}
 
 	return 0;
@@ -734,12 +735,14 @@ add_range(struct rbc_output *output)
 			}
 
 			tmp = crs;
-			if (!check_for_duplicates(crs))
+			if (!check_for_duplicates(crs)) {
 				__output[__output_size++] = dup_rbc_output(crs);
+			}
 			crs = crs->next;
 			free (tmp);
 		}
 	}
+
 }
 
 static struct rbc_output *
