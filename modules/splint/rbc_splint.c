@@ -293,7 +293,8 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 					 	(strstr(line,"initialized to type") &&
 						 strstr(line,"expects")))) {
 				strcpy(assignments, line);
-				if (fgets(scd_line, LINE_MAX, f) != NULL)
+				if (!strstr(line, "Assignment of") &&
+						fgets(scd_line, LINE_MAX, f) != NULL)
 					strcat(assignments, scd_line);
 				if (is_signed_unsigned(assignments)) {
 					get_info(line, 0, &output, ERR_SIGNED_UNSIGNED);
