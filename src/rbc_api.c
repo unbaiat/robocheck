@@ -20,11 +20,11 @@ log_message (char *message, FILE *f_ptr)
 	
 	if (f_ptr != NULL)
 	{
-		fprintf(f_ptr, "%s", LoggerBuff);
+		fprintf(f_ptr, "%s\n", LoggerBuff);
 	}
 	else if (FileLogger != NULL)
 	{
-		fprintf(FileLogger, "%s", LoggerBuff);
+		fprintf(FileLogger, "%s\n", LoggerBuff);
 	}
 	else
 	{

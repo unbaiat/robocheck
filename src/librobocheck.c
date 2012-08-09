@@ -582,21 +582,21 @@ load_libpenalty(void)
 
 	open_status = check_libpenalty(&lib_path);
 
-	log_message("Attempting to load penalty module", NULL);
+	log_message("Attempting to load penalty module", stderr);
 
 	if (open_status == 0 && lib_path != NULL)
 	{
 		__libpenalty = dlopen(lib_path, RTLD_LAZY);
 		if (!__libpenalty)
 		{
-			log_message (dlerror(), NULL);
+			log_message (dlerror(), stderr);
 			goto exit;
 		}
 
 		fptr_init = dlsym(__libpenalty, "init_penalties");
 		if ((error = dlerror()) != NULL)
 		{
-			log_message (error, NULL);
+			log_message (error, stderr);
 			goto exit;
 		}
 		
@@ -606,7 +606,7 @@ load_libpenalty(void)
 			apply_penalty_ptr = dlsym(__libpenalty, "apply_penalty");
 			if ((error = dlerror()) != NULL)
 			{
-				log_message (error, NULL);
+				log_message (error, stderr);
 				goto exit;
 			}	
 		}
@@ -615,11 +615,11 @@ load_libpenalty(void)
 exit:
 	if (ret_status != 0)
 	{
-		log_message("Penalty module not loaded.", NULL);
+		log_message("Penalty module not loaded.", stderr);
 	}
 	else
 	{
-		log_message("Penalty module loaded succesfully", NULL);
+		log_message("Penalty module loaded succesfully", stderr);
 	}
 
 	return ret_status;

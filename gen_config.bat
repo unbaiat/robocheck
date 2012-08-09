@@ -7,7 +7,7 @@ echo   ^<init output="NULL"^> >> rbc_config.xml
 echo     ^<tools count="0"^> >> rbc_config.xml
 echo     ^</tools^> >> rbc_config.xml
 echo     ^<input/^> >> rbc_config.xml
-echo     ^<penalty load="false" lib_path="libpenalty.lib"/^> >> rbc_config.xml
+echo     ^<penalty load="false" lib_path="libpenalty.dll"/^> >> rbc_config.xml
 echo     ^<err_count value="19"/^> >> rbc_config.xml
 echo   ^</init^> >> rbc_config.xml
 echo   ^<installed_tools count="0"^> >> rbc_config.xml
@@ -55,13 +55,13 @@ configure.exe --add-error-details 17 "Trailing whitespace at the end of lines" I
 configure.exe --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
 configure.exe --add-error-details 19 "Invalid memory free" INF 0.1 float
 
-configure.exe --create-tool drmemory ./modules/drmemory/libdrmemory.lib dynamic
+configure.exe --create-tool drmemory .\modules\drmemory\libdrmemory.dll dynamic
 configure.exe --register-tool drmemory
 configure.exe --register-error 1 drmemory
 configure.exe --register-error 2 drmemory
 configure.exe --register-error 3 drmemory
 configure.exe --register-error 19 drmemory
 
-configure.exe --set-executable ./tests/simple.exe
-configure.exe --add-static-parameter tests/simple.c
-configure.exe --set-penalty-info true libpenalty.lib
+configure.exe --set-executable .\tests\simple.exe
+configure.exe --add-static-parameter tests\simple.c
+configure.exe --set-penalty-info true libpenalty.dll

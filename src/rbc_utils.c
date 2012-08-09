@@ -35,7 +35,13 @@ create_log_message (char * message)
 	tt = time(&tt);
 	time_struct = localtime(&tt);
 	if (time_struct != NULL) {
+	#ifdef _WIN32
+		current_length = sprintf(LoggerBuff, "%02d-%02d-%d %02d:%02d:%02d - ",
+			time_struct->tm_mday, time_struct->tm_mon, time_struct->tm_year + 1900,
+			time_struct->tm_hour, time_struct->tm_min, time_struct->tm_sec);
+	#else
 		current_length = strftime(LoggerBuff, max_length, "%d-%m-%Y %T - ", time_struct);
+	#endif
 		if (current_length == 0) {
 			memset (LoggerBuff, 0, 2 * MAX_BUFF_SIZE);
 		}
