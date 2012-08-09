@@ -1,0 +1,18 @@
+CC = cl
+CFLAGS = /nologo /W4 /EHsc /Za
+XML_PATH=C:\licenta\robocheck\lib-win
+
+FILES = rbc_simian.c
+FILES_OBJ = rbc_simian.obj
+LIB_LIST = libxml2.lib libxslt.lib iconv.lib
+
+all: compile
+	link /nologo /dll /out:libsimian.dll /implib:libsimian.lib $(FILES_OBJ) ..\..\libutils.lib
+	
+compile: $(FILES_OBJ)
+
+rbc_simian.obj:
+	$(CC) $(CFLAGS) /DDLL_EXPORTS /I$(XML_PATH) /c /Fo$@ $(FILES)
+	
+clean:
+	del $(FILES_OBJ) utils.obj libutils.dll libutils.lib

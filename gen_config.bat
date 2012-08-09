@@ -55,6 +55,7 @@ configure.exe --add-error-details 17 "Trailing whitespace at the end of lines" I
 configure.exe --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
 configure.exe --add-error-details 19 "Invalid memory free" INF 0.1 float
 
+:: drmemory
 configure.exe --create-tool drmemory .\modules\drmemory\libdrmemory.dll dynamic
 configure.exe --register-tool drmemory
 configure.exe --register-error 1 drmemory
@@ -62,10 +63,7 @@ configure.exe --register-error 2 drmemory
 configure.exe --register-error 3 drmemory
 configure.exe --register-error 19 drmemory
 
-configure.exe --set-executable .\tests\simple.exe
-configure.exe --add-static-parameter tests\simple.c
-configure.exe --set-penalty-info true libpenalty.dll
-
+:: splint
 configure.exe --create-tool splint .\modules\splint\libsplint.dll static
 configure.exe --register-tool splint
 configure.exe --register-parameter +boundswrite splint
@@ -75,3 +73,14 @@ configure.exe --register-error 1 splint
 configure.exe --register-error 2 splint
 configure.exe --register-error 3 splint
 configure.exe --register-error 13 splint
+
+:: simian
+configure.exe --create-tool simian .\modules\simian\libsimian.dll static
+configure.exe --register-tool simian
+configure.exe --register-parameter -language=C simian
+configure.exe --register-parameter -threshold=4 simian
+configure.exe --register-error 11 simian
+
+configure.exe --set-executable .\tests\simple.exe
+configure.exe --add-static-parameter tests\simple.c
+configure.exe --set-penalty-info true libpenalty.dll
