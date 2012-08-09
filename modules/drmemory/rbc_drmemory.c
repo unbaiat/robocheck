@@ -8,7 +8,7 @@
  * (user can choose to track a part, none or all types of errors).
  *
  * (C) 2012, Laura Vasilescu <laura@rosedu.org>
- *              * last review 20.06.2012
+ *              * last review 09.08.2012
  */
 
 #define _CRT_SECURE_NO_WARNINGS

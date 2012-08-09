@@ -65,3 +65,13 @@ configure.exe --register-error 19 drmemory
 configure.exe --set-executable .\tests\simple.exe
 configure.exe --add-static-parameter tests\simple.c
 configure.exe --set-penalty-info true libpenalty.dll
+
+configure.exe --create-tool splint .\modules\splint\libsplint.dll static
+configure.exe --register-tool splint
+configure.exe --register-parameter +boundswrite splint
+configure.exe --register-parameter +boundsread splint
+configure.exe --register-error 12 splint
+configure.exe --register-error 1 splint
+configure.exe --register-error 2 splint
+configure.exe --register-error 3 splint
+configure.exe --register-error 13 splint

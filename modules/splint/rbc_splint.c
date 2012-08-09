@@ -9,8 +9,11 @@
  *	Parses the output of splint according to the bit set, flags.
  *
  * (C) 2011, Iulia Bolcu <reea_mod@yahoo.com>
- *              * last review 10.07.2011
+ * (C) 2012, Laura Vasilescu <laura@rosedu.org>
+ *              * last review 09.08.2012
  */
+
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,11 +25,20 @@
 #define MSG_SIZE 2048
 #define SEPARATORS " :()\r\n\t"
 #define ASSIGN_SEPARATORS " ,:\r\n"
-#define DEFAULT_CMD "splint"
+#ifdef _WIN32
+	#define DEFAULT_CMD "c:\\splint-3.1.1\\bin\\splint.exe "
+#else
+	#define DEFAULT_CMD "splint"
+#endif
 #define OUTPUT " > output"
 #define SPACE " "
 #define OUTPUT_FILE "output"
-#define RM_OUTPUT "rm output"
+
+#ifdef _WIN32
+	#define RM_OUTPUT "del output"
+#else
+	#define RM_OUTPUT "rm output"
+#endif
 
 
 extern FILE *FileLogger;
@@ -55,7 +67,6 @@ get_function(char *line){
 	if (function != NULL)
 		free(function);
 	function = strdup(p);
-	//printf(" fct :%s\n",function);
 }
 
 /*
@@ -115,7 +126,7 @@ print_list(struct rbc_output *list){
 static void 
 get_info(char *line,int case_static,struct rbc_output **output,enum EN_err_type err_type){
 	char error_message[LINE_MAX];
-	char *s_name,*l_number,*p;
+	char *s_name,*l_number;
 	struct rbc_output node;
 	s_name = strtok(line, SEPARATORS);
 	if (s_name == NULL) 
@@ -162,30 +173,30 @@ is_signed_unsigned(char *line){
 		
 	p = strtok(line, ASSIGN_SEPARATORS);
 	if (p == NULL)
-		return;
+		return 0;
 	for (i=0;i<limit;i++){
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
-			return;
+			return 0;
 	}
 	if (strcmp(p,"unsigned") == 0){
 		count_unsigned ++;
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
-			return;
+			return 0;
 	}
 	left = p;
 	for (i=0;i<2;i++){
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
-			return;
+			return 0;
 	}
 
 	if (strcmp(p,"unsigned") == 0){
 		count_unsigned ++;
 		p = strtok(NULL, ASSIGN_SEPARATORS);
 		if (p == NULL)
-			return;
+			return 0;
 	}
 	right = p;
 	return (strcmp(right,left) == 0 
@@ -285,7 +296,6 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count){
 		}
 
 		fclose(f);
-		//print_list(output);
 		system(RM_OUTPUT);
 	}
 

@@ -6,9 +6,8 @@ FILES = rbc_drmemory.c
 FILES_OBJ = rbc_drmemory.obj
 LIB_LIST = libxml2.lib libxslt.lib iconv.lib
 
-
 all: compile
-	link /nologo /dll /out:libdrmemory.dll /implib:libdrmemory.lib $(FILES_OBJ) ../../libutils.lib
+	link /nologo /dll /out:libdrmemory.dll /implib:libdrmemory.lib $(FILES_OBJ) ..\..\libutils.lib
 	
 compile: $(FILES_OBJ)
 
