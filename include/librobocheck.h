@@ -25,6 +25,9 @@ struct rbc_dynamic_input *__dynamic_ptr = NULL;
 struct rbc_static_input *__static_ptr = NULL;
 int __rbc_err_count = -1;
 
+void **lib_handlers = NULL;
+int num_lib_handlers = 0;
+
 FILE * FileLogger = NULL;
 FILE * OutputStream = NULL;
 char LoggerBuff[2 * MAX_BUFF_SIZE];

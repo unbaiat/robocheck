@@ -49,6 +49,18 @@ check_libpenalty(char **);
 static void
 add_range(struct rbc_output * );
 
+static void
+close_library_handlers(void);
+
+static void
+close_library_handlers(void)
+{
+	int i;
+	for (i = 0; i < num_lib_handlers; i++) {
+		dlclose(lib_handlers[i]);
+	}
+}
+
 void
 close_robocheck (void)
 {
@@ -87,6 +99,7 @@ close_robocheck (void)
 	}
 
 	free_output_vector();
+	close_library_handlers();
 }
 
 int
@@ -341,6 +354,10 @@ load_module(struct rbc_input *input, rbc_errset_t flags, int *err_count, const c
 		fprintf(stderr, "Failed loading module %s.\n", libmodule);
 		goto exit_function;
 	}
+	
+	num_lib_handlers++;
+	lib_handlers = realloc(lib_handlers, num_lib_handlers * sizeof(void *));
+	lib_handlers[num_lib_handlers - 1] = handle;
 
 	run_tool_ptr = dlsym(handle, func_name);
 	if ((error = dlerror()) != NULL)
@@ -358,8 +375,6 @@ load_module(struct rbc_input *input, rbc_errset_t flags, int *err_count, const c
 		output = run_tool_ptr(input, flags, err_count);
 		set_robocheck_module();
 	}
-
-	dlclose(handle);
 
 exit_function:
 	if (output == NULL)
@@ -688,7 +703,7 @@ add_range(struct rbc_output *output)
 		__output = (struct rbc_output **) malloc(ALLOC_INC * sizeof (struct rbc_output *));
 		if (__output == NULL)
 		{
-			log_message(NOMEM_ERR, NULL);
+			log_message(NOMEM_ERR, stderr);
 			return;
 		}
 
@@ -713,7 +728,7 @@ add_range(struct rbc_output *output)
 				else
 				{
 					free (__output); __output = NULL;
-					log_message(NOMEM_ERR, NULL);
+					log_message(NOMEM_ERR, stderr);
 					return;
 				}
 			}
@@ -806,19 +821,19 @@ sort_output_vector ()
 static void
 json_output_start()
 {
-	fprintf(OutputStream, "{\n\t\"result\":\n\t[\n");
-	fflush(OutputStream);
+	fprintf(stdout, "{\n\t\"result\":\n\t[\n");
+	fflush(stdout);
 }
 
 static void
 json_output_error(struct rbc_out_info *info)
 {
-	fprintf(OutputStream, "\t\t{\n");
-	fprintf(OutputStream, "\t\t\t\"name\" : \"%s\",\n", info->msg);
-	fprintf(OutputStream, "\t\t\t\"key\" : \"%s\",\n", info->penalty);
-	fprintf(OutputStream, "\t\t\t\"value\" : \"%.2f\",\n", info->penalty_value);
-	fprintf(OutputStream, "\t\t\t\"where\" :\n\t\t\t[\n");
-	fflush(OutputStream);
+	fprintf(stdout, "\t\t{\n");
+	fprintf(stdout, "\t\t\t\"name\" : \"%s\",\n", info->msg);
+	fprintf(stdout, "\t\t\t\"key\" : \"%s\",\n", info->penalty);
+	fprintf(stdout, "\t\t\t\"value\" : \"%.2f\",\n", info->penalty_value);
+	fprintf(stdout, "\t\t\t\"where\" :\n\t\t\t[\n");
+	fflush(stdout);
 }
 
 static void
@@ -826,30 +841,30 @@ json_output_error_message(char *msg, int code)
 {
 	msg = strdup(msg);
 	trim_whitespace(msg);
-	fprintf(OutputStream, "\t\t\t\t{ \"line\" : \"%s\" }", msg);
+	fprintf(stdout, "\t\t\t\t{ \"line\" : \"%s\" }", msg);
 	free(msg);
 
 	if (!code)
-		fprintf(OutputStream, ",");
-	fprintf(OutputStream, "\n");
-	fflush(OutputStream);
+		fprintf(stdout, ",");
+	fprintf(stdout, "\n");
+	fflush(stdout);
 }
 
 static void
 json_output_error_end(int code)
 {
-	fprintf(OutputStream, "\t\t\t]\n\t\t}");
+	fprintf(stdout, "\t\t\t]\n\t\t}");
 	if (!code)
-		fprintf(OutputStream, ",");
-	fprintf(OutputStream, "\n");
-	fflush(OutputStream);
+		fprintf(stdout, ",");
+	fprintf(stdout, "\n");
+	fflush(stdout);
 }
 
 static void
 json_output_end()
 {
-	fprintf(OutputStream, "\t]\n}\n");
-	fflush(OutputStream);
+	fprintf(stdout, "\t]\n}\n");
+	fflush(stdout);
 }
 
 static void
@@ -869,9 +884,9 @@ update_errors()
 	print_vector();
 #endif
 
-	log_message("Penalty results: ", NULL);
+	log_message("Penalty results: ", stderr);
 	json_output_start();
-
+	
 	start = 0;
 	for (i = 0; i <= __output_size; i++)
 	{
@@ -887,14 +902,14 @@ update_errors()
 			if (aux != NULL)
 			{
 				sprintf (penalty_buff, "- %.2f p  | %s | %s", aux->penalty_value, aux->msg, aux->penalty);
-				log_message(penalty_buff, NULL);
+				log_message(penalty_buff, stderr);
 				json_output_error(aux);
 				
 
 				for (j = start; j <= (i - 1); j++)
 				{
 					sprintf (penalty_buff, "\t\t%s", __output[j]->err_msg);
-					log_message(penalty_buff, NULL);
+					log_message(penalty_buff, stderr);
 					json_output_error_message(__output[j]->err_msg, j == (i - 1));
 
 					__output[j]->aux_info = aux;

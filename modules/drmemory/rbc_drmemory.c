@@ -29,7 +29,7 @@
 
 #define LINE_MAX 512
 #ifdef _WIN32
-	#define DEFAULT_CMD "drmemory.exe -show_reachable -redzone_size 0 -logdir . "
+	#define DEFAULT_CMD "drmemory.exe -show_reachable -redzone_size 0 -logdir  . "
 #else
 	#define DEFAULT_CMD "./drmemory -show_reachable -redzone_size 0 -logdir . "
 #endif
@@ -47,11 +47,31 @@
 static char *
 get_function_name (char *name)
 {
-	char *ret = NULL, *p = NULL;
+	char *ret = NULL, *p = NULL, *a;
 	
 	p = strchr(name, '!');
-	if (p == NULL)
-		return NULL;
+	if (p == NULL) {
+		a = strdup(name);
+		/* # */
+		p = strtok(a, " \t");
+		if (p == NULL)
+			return NULL;
+		/* number */
+		p = strtok(NULL, " \t");
+		if (p == NULL)
+			return NULL;
+		/* name */
+		p = strtok(NULL, " \t");
+		if (p == NULL)
+			return NULL;
+		
+		ret = calloc(strlen(name), sizeof(char));
+		strcpy(ret, p);
+		trim_whitespace(ret);
+		free(a);
+		
+		return ret;
+	}
 
 	ret = calloc(strlen(name), sizeof(char));
 	strcpy(ret, p + 1);
@@ -66,7 +86,15 @@ get_function_name (char *name)
 static const char *
 get_simple_filename (const char *filename)
 {
-	const char *s = strrchr(filename, '/');
+
+	const char *s = NULL;
+
+#ifdef _WIN32
+	s = strrchr(filename, '\\');
+#else
+	s = strrchr(filename, '/');
+#endif
+
 	if (s != NULL)
 		s++;
 	else
@@ -107,7 +135,8 @@ parse_line (char *lline, char **f_name, char **s_name, char **l_num,
 	    struct rbc_dynamic_input *dynamic_input)
 {
 	char *first, *source, *p;
-	char *line = strdup(line);
+	char *line = strdup(lline);
+	int len;
 
 	if (line == NULL || strlen(line) == 0)
 		return 0;
@@ -116,20 +145,19 @@ parse_line (char *lline, char **f_name, char **s_name, char **l_num,
 	if (p == NULL)
 		return 0;
 
-	first = calloc(strlen(line) + 1, sizeof(char));
-	strcpy(first, p);
+	first = strdup(p);
 	p = strtok(NULL, SEPARATORS);
 	if (p == NULL) {
 		free(first);
 		return 0;
 	}
-	source = calloc(strlen(line) + 1, sizeof(char));
-	strcpy(source, p);
+	source = strdup(p);
 
 	/* Get source filename. */
-	*s_name = calloc(strlen(source) + 1, sizeof(char));
-	p = strchr(source, ':');
-	strncpy(*s_name, source, p - source);
+	len = strlen(source);
+	*s_name = strdup(source);
+	p = strrchr(source, ':');
+	(*s_name)[p - source] = '\0';
 
 	if (!is_source(dynamic_input->sources,
 		      dynamic_input->source_count, *s_name)) {
@@ -268,6 +296,7 @@ static void remove_output_dir (char *name)
 static void
 wait_end_of_writing (char *filename)
 {
+#ifndef _WIN32
 	FILE *in = NULL;
 	char line[LINE_MAX];
 	char command[LINE_MAX];
@@ -287,6 +316,20 @@ wait_end_of_writing (char *filename)
 		if (strlen(line) == 0)
 			break;
 	}
+#endif
+}
+
+void modify_name_path(char *str)
+{
+	#ifdef _WIN32
+	int i;
+	
+	for (i = 0; i < strlen(str); i++) {
+		if (str[i] == '/') 
+			str[i] = '\\';
+	}
+	
+	#endif
 }
 
 /*
@@ -337,6 +380,7 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 
 		if (name == NULL)
 			return NULL;
+		modify_name_path(name);
 
 		wait_end_of_writing(name);
 		pclose(out_stream);
@@ -347,14 +391,14 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 			free(name);
 			return NULL;
 		}
-
+		
 		/* Parse output and get errors. */
 		parse_output(results, dynamic_input, flags, &output);
 
 		fclose(results);
 
 		/* Remove output directory. */
-		remove_output_dir(name);
+		//remove_output_dir(name);
 
 		free(name);
 	}

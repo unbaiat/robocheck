@@ -1,0 +1,2 @@
+all:
+	cl simple.c /Zi /Fesimple
