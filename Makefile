@@ -53,7 +53,7 @@ make_obj:
 	$(CC) $(CFLAGS) $(RBC_FILES_PATH)
 
 configure: configure.o
-	$(QUIET_LINK) $(CC) $^ $(LDLIBS) $(XML_OBJ_FILES) -o configure
+	$(QUIET_LINK) $(CC) $^ $(LDLIBS) $(XML_OBJ_FILES) -o robo_config
 
 penalty: penalty.o
 	$(CC) $^ $(LDLIBS) $(SO_FLAGS) -o libpenalty.so
@@ -68,6 +68,6 @@ drmemory:
 
 clean:
 	cd ./sparse-0.4.1; make clean
-	-rm -f *.so *.o *~ configure robocheck static_analyzer black_list
+	-rm -f *.so *.o *~ robo_config robocheck static_analyzer black_list
 	-rm -f drmemory
 	bash make_modules.sh clean
