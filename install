@@ -18,3 +18,4 @@ apt-get install g++-multilib
 
 apt-get install splint
 apt-get install cmake-curses-gui
+apt-get install pkg-config
