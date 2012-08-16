@@ -16,6 +16,8 @@ then
 		if [ $? -ne 0 ]; then
 			exit 1
 		fi
+		cp *.so ../.. 2> /dev/null
+		cp *.jar ../.. 2> /dev/null
 		cd ../..;
 	done
 

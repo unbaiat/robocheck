@@ -71,7 +71,6 @@ add (struct rbc_output **list, struct rbc_output node)
 		if (p->err_type == node.err_type && p->err_msg != NULL
 		    && node.err_msg != NULL
 		    && cmp_msg_file(p->err_msg, node.err_msg)) {
-			fprintf(stderr, "BLA: %s\n", node.err_msg);
 			break;
 		}
 		q = p;

@@ -5,7 +5,7 @@
 
 #include "../../include/static_tool.h"
 
-#define SPARSE_PATH	"./static_analyzer"
+#define SPARSE_PATH	"static_analyzer"
 
 static void
 make_command(char *command, struct rbc_input *input, struct rbc_static_input *static_input);

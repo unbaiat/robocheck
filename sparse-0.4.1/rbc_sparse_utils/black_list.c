@@ -29,7 +29,7 @@ set_black_list()
         goto exit;
     }
 
-    f_in = fopen("black_list", "r");
+    f_in = fopen("/tmp/black_list", "r");
     if (f_in == NULL)
     {
         perror("fopen");

@@ -34,7 +34,7 @@ UTILS_OBJ = utils.o
 all: utils robocheck sparse drmemory
 	bash make_modules.sh build
 	gcc -Wall $(CPPFLAGS) $(LDLIBS) main.c -o robocheck -lrobocheck -lutils -L.
-	ln -sf sparse-0.4.1/rbc_sparse_utils/black_list
+	ln -sf $(PWD)/sparse-0.4.1/rbc_sparse_utils/black_list /tmp/black_list
 	ln -sf sparse-0.4.1/rbc_sparse_utils/static_analyzer
 
 utils: $(UTILS_OBJ)
@@ -68,6 +68,6 @@ drmemory:
 
 clean:
 	cd ./sparse-0.4.1; make clean
-	-rm -f *.so *.o *~ robo_config robocheck static_analyzer black_list
+	-rm -f *.so *.o *~ robo_config robocheck static_analyzer /tmp/black_list
 	-rm -f drmemory
 	bash make_modules.sh clean

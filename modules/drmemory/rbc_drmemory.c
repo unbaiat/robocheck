@@ -31,7 +31,7 @@
 #ifdef _WIN32
 	#define DEFAULT_CMD "drmemory.exe -show_reachable -redzone_size 0 -logdir  . "
 #else
-	#define DEFAULT_CMD "./drmemory -show_reachable -redzone_size 0 -logdir . "
+	#define DEFAULT_CMD "drmemory -show_reachable -redzone_size 0 -logdir . "
 #endif
 #define DETAILS "~~Dr.M~~ Details: "
 

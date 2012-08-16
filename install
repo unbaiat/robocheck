@@ -19,3 +19,6 @@ apt-get install g++-multilib
 apt-get install splint
 apt-get install cmake-curses-gui
 apt-get install pkg-config
+
+./modules/simian/*.jar copiate în /lib/*
+chmod 777 pe ele

@@ -23,7 +23,7 @@
 
 #define LINE_MAX 512
 #define MSG_SIZE 2048
-#define DEFAULT_CMD "java -jar ./modules/simian/simian-2.3.32.jar"
+#define DEFAULT_CMD "java -jar /lib/simian-2.3.32.jar"
 #define OUTPUT " > output"
 #define SPACE " "
 #define OUTPUT_FILE "output"
@@ -125,7 +125,7 @@ run_tool (struct rbc_input *input, rbc_errset_t flags, int *err_count)
 
 		}
 		fclose(f);
-		print_list(output);
+		//print_list(output);
 		system(RM_OUTPUT);
 	}
 
