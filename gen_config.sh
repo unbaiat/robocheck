@@ -58,7 +58,7 @@ robo_config --add-error-details 19 "Invalid memory free" INF 0.1 float
 
 NAME=drmemory
 # Install tool
-robo_config --create-tool $NAME ./modules/drmemory/libdrmemory.so dynamic
+robo_config --create-tool $NAME modules/drmemory/libdrmemory.so dynamic
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register parameters used when tool is running
@@ -70,7 +70,7 @@ robo_config --register-error 19 $NAME
 
 NAME=valgrind
 # Install tool
-robo_config --create-tool $NAME ./modules/valgrind/libvalgrind.so dynamic
+robo_config --create-tool $NAME modules/valgrind/libvalgrind.so dynamic
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register parameters used when tool is running
@@ -85,7 +85,7 @@ robo_config --register-error 19 $NAME
 
 NAME=splint
 # Install tool
-robo_config --create-tool $NAME ./modules/splint/libsplint.so static
+robo_config --create-tool $NAME modules/splint/libsplint.so static
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register parameters used when tool is running
@@ -100,7 +100,7 @@ robo_config --register-error 13 $NAME
 
 NAME=helgrind
 # Install tool
-robo_config --create-tool $NAME ./modules/helgrind/libhelgrind.so dynamic
+robo_config --create-tool $NAME modules/helgrind/libhelgrind.so dynamic
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register errors
@@ -113,7 +113,7 @@ robo_config --register-error 10 $NAME
 
 NAME=simian
 # Install tool
-robo_config --create-tool $NAME ./modules/simian/libsimian.so static
+robo_config --create-tool $NAME modules/simian/libsimian.so static
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register parameters used when tool is running
@@ -124,7 +124,7 @@ robo_config --register-error 11 $NAME
 
 NAME=sparse
 # Install tool
-robo_config --create-tool $NAME ./modules/sparse/libsparse.so static
+robo_config --create-tool $NAME modules/sparse/libsparse.so static
 # Use tool -- used at startup
 robo_config --register-tool $NAME
 # Register parameters used when tool is running
