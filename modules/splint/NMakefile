@@ -1,6 +1,6 @@
 CC = cl
 CFLAGS = /nologo /W4 /EHsc /Za
-XML_PATH=C:\licenta\robocheck\lib-win
+XML_PATH=C:\robocheck\repo\lib-win
 
 FILES = rbc_splint.c
 FILES_OBJ = rbc_splint.obj

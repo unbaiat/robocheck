@@ -1,6 +1,6 @@
 CC = cl
 CFLAGS = /nologo /W4 /EHsc /Za
-XML_PATH=C:\licenta\robocheck\lib-win
+XML_PATH=C:\robocheck\repo\lib-win
 
 FILES = rbc_simian.c
 FILES_OBJ = rbc_simian.obj
