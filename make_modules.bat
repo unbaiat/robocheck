@@ -18,10 +18,10 @@
 				cd ../..
 				@exit /B 1
 			)
-			cp /*.dll ../.. 2>NUL
-			cp /*.lib ../.. 2>NUL
-			cp /*.exp ../.. 2>NUL
-			cp /*.jar ../.. 2>NUL
+			cp *.dll ..\.. 2>NUL
+			cp *.lib ..\.. 2>NUL
+			cp *.exp ..\.. 2>NUL
+			cp *.jar ..\.. 2>NUL
 		)
 		@cd ../..
 	)
