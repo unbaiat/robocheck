@@ -18,7 +18,7 @@ LIB_XML = lib-win\libxml2.lib lib-win\iconv.lib  lib-win\libxslt.lib
 
 all: utils wrapper robocheck 
 	make_modules.bat build
-	$(CC) $(CFLAGS)  /I. /I$(XML_PATH) /Femain main.c  libutils.lib $(LIB_XML) libpenalty.lib librobocheck.lib
+	$(CC) $(CFLAGS)  /I. /I$(XML_PATH) /Ferobocheck main.c  libutils.lib $(LIB_XML) libpenalty.lib librobocheck.lib
 
 utils: $(UTILS_OBJ)
 	link /nologo /dll /out:libutils.dll /implib:libutils.lib $(UTILS_OBJ)
@@ -41,14 +41,14 @@ make_obj:
 	$(CC) $(CFLAGS) /I. /I$(XML_PATH) /c $(RBC_FILES)
 
 configure: configure.obj
-	$(CC) $(CFLAGS) /I. /I$(XML_PATH) configure.obj $(XML_FILES_OBJ) libutils.lib $(LIB_XML) /Feconfigure
+	$(CC) $(CFLAGS) /I. /I$(XML_PATH) configure.obj $(XML_FILES_OBJ) libutils.lib $(LIB_XML) /Ferobo_config
 
 penalty: penalty.obj
 	link /nologo /dll /out:libpenalty.dll /implib:libpenalty.lib penalty.obj librobocheck.obj $(RBC_FILES_OBJ) $(XML_FILES_OBJ) libutils.lib $(LIB_XML) $(DLFCN)
 
 clean:
-	del configure 2>NUL
-	del main 2>NUL
+	del robo_config 2>NUL
+	del robocheck 2>NUL
 	del *.obj 2>NUL
 	del *~ 2>NUL
 	del *.dll 2>NUL
