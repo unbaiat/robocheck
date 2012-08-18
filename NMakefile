@@ -1,6 +1,6 @@
 CC = cl
 CFLAGS = /nologo /W4 /EHsc /Za
-XML_PATH=C:\robocheck\lib-win
+XML_PATH=C:\robocheck\repo\lib-win
 
 RBC_FILES = src\rbc_utils.c src\rbc_task.c src\rbc_api.c
 RBC_FILES_OBJ = rbc_utils.obj rbc_task.obj rbc_api.obj
