@@ -10,7 +10,7 @@ echo -e "    <penalty load=\"false\" lib_path=\"libpenalty.so\"/>\n" >> rbc_conf
 echo -e "    <err_count value=\"19\"/>" >> rbc_config.xml
 echo -e "  </init>\n" >> rbc_config.xml
 echo -e "  <installed_tools count=\"0\">\n" >> rbc_config.xml
-echo -e "  </installed_tools\n>" >> rbc_config.xml
+echo -e "  </installed_tools>\n" >> rbc_config.xml
 echo -e "  <errors>\n" >> rbc_config.xml
 # Create errors
 echo -e "    <err_1 id=\"1\" name=\"Memory leak\"/>" >> rbc_config.xml
