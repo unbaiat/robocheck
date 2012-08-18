@@ -18,6 +18,8 @@
 				cd ../..
 				@exit /B 1
 			)
+			cp /*.so ../.. 2>NUL
+			cp /*.jar ../.. 2>NUL
 		)
 		@cd ../..
 	)
