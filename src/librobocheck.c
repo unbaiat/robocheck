@@ -6,6 +6,8 @@
 
 #ifdef _WIN32
 	#include "../wrapper/dlfcn.h"
+	#define popen _popen
+	#define pclose _pclose
 #else
 	#include <dlfcn.h>
 #endif
