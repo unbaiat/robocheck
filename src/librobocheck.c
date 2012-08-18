@@ -830,62 +830,56 @@ json_output_error(struct rbc_out_info *info)
 	fflush(stdout);
 }
 
+static char *
+contains_file_name(char *msg)
+{
+	int i, len = 1000;
+	char *name = NULL, *aux = NULL;
+	char *p = NULL;
+
+	for (i = 0; i < __static_ptr->file_count; i++) {
+		name = __static_ptr->file_names[i];
+		aux = strstr(msg, name);
+		if (aux && (aux - msg < len)) {
+			p = aux;
+			len = aux - p;
+		}
+	}
+
+	if (p)
+		return p;
+
+	return NULL;
+}
+
 static void
 transform_file_name(char *msg)
 {
-	char *name, *p, *aux, *file;
-	char **file_view = NULL;
-	int i, len, code = 0, name_len = 0, num_view = 0;
+	char pwd[MAX_BUFF_SIZE];
+	char *file, *end;
+	int len, zero;
+	FILE *pwd_cmd = popen("pwd", "r");
 
-	len = strlen(msg);
-	for (i = 0; i < __static_ptr->file_count; i++) {
-		aux = strdup(msg);
-		name = __static_ptr->file_names[i];
-		name_len = strlen(name);
-
-		file = strstr(aux, name);
-		if (file == NULL) {
-			continue;
+	memset(pwd, 0, MAX_BUFF_SIZE);
+	fscanf(pwd_cmd, "%s", pwd);
+	len = strlen(pwd);
+	pwd[len] = '/';
+	pwd[len + 1] = '\0';
+	
+	file = msg;
+	end = msg + strlen(msg);;
+	zero = 0;
+	while (1) {
+		file = strstr(file, pwd);
+		if (!file) {
+			memset(end - zero, 0, zero);
+			break;
 		}
-
-		/* Number of files in line */
-		file = aux;
-		while (1) {
-			file = strstr(file + name_len, name);
-			if (file == NULL)
-				break;
-			file_view = realloc(file_view, (num_view + 1) * sizeof(char *));
-			file_view[num_view] = file;
-			num_view++;
-		}
-
-		p = strtok(aux, " ");
-		memset(msg, 0, len);
-		code = 1;
-		while (1) {
-			if (code == 1 && num_view > 0) {
-				code = 0;
-				file = file_view[0];
-			}
-			if ((code == 1) || (p + strlen(p) < file && code == 0)) {
-				strcat(msg, p);
-				strcat(msg, " ");
-			} else {
-				char *pp = strstr(p, name);
-				code = 1;
-				strcat(msg, name);
-				num_view--;
-				strcat(msg, pp + name_len);
-				strcat(msg, " ");
-			}
-			p = strtok(NULL, " ");
-			if (p == NULL)
-				break;
-		}
-		num_view = 0;
-		free(file_view);
-		free(aux);
+		memmove(file, file + strlen(pwd), end - file - strlen(pwd));
+		zero += strlen(pwd);
 	}
+
+	fclose(pwd_cmd);
 }
 
 static void
