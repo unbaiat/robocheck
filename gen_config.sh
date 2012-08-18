@@ -146,7 +146,11 @@ config_static_files()
 {
 	files=$(find -name '*.c')
 	for file in $files; do
-		robo_config --add-static-parameter $file
+		local param=$file
+		if [ ${file::2} == "./" ]; then
+			param=${file:2}
+		fi
+		robo_config --add-static-parameter $param
 	done
 }
 
