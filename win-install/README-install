@@ -1,3 +1,6 @@
 install DrMemory-Windows-1.4.6-2.exe
 unzip splint-3.1.1.win32.zip in C:\splint-3.1.1
 install jxpiinstall.exe
+
+add path for lib-win to Path env variable
+add path for robocheck to Path env variable
