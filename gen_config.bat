@@ -81,10 +81,9 @@ robo_config.exe --register-parameter -language=C simian
 robo_config.exe --register-parameter -threshold=4 simian
 robo_config.exe --register-error 11 simian
 
-
+robo_config.exe --set-penalty-info true libpenalty.dll
 robo_config.exe --set-executable tema0.exe
 call :config_static_files
-robo_config.exe --set-penalty-info true libpenalty.dll
 goto :eof
 
 :config_static_files
