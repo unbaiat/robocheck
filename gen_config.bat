@@ -35,52 +35,63 @@ echo     ^<err_19 id="19" name="Invalid free"/^> >> rbc_config.xml
 echo   ^</errors^> >> rbc_config.xml
 echo ^</appSettings^> >> rbc_config.xml
 
-configure.exe --add-error-details 1 "New memory leak modification" 1 0.2 float
-configure.exe --add-error-details 2 "Invalid accesses" INF 0.3 float
-configure.exe --add-error-details 3 "Use of unitialized variable" INF 0.2 float
-configure.exe --add-error-details 4 "Not closing file descriptors at the end of the program" INF 0.1 float
-configure.exe --add-error-details 5 "Data races" INF 0.1 float
-configure.exe --add-error-details 6 "Dead lock" INF 0.1 float
-configure.exe --add-error-details 7 "Unlock error" INF 0.1 float
-configure.exe --add-error-details 8 "Destroy" INF 0.1 float
-configure.exe --add-error-details 9 "Missusage of condition variables" INF 0.1 float
-configure.exe --add-error-details 10 "Hold lock" INF 0.1 float
-configure.exe --add-error-details 11 "Duplicate code in sources" INF 0.2 float
-configure.exe --add-error-details 12 "Use of non-static variables or functions in a single module" INF 0.1 float
-configure.exe --add-error-details 13 "Assignment from signed to unsigned" INF 0.1 float
-configure.exe --add-error-details 14 "Verification of return value for black listed function call is omited" INF 0.3 float
-configure.exe --add-error-details 15 "Function line count overlaps the maximum admited limit" INF 0.2 float
-configure.exe --add-error-details 16 "Indentation level overlaps the maximum admited limit" INF 0.2 float
-configure.exe --add-error-details 17 "Trailing whitespace at the end of lines" INF 0.2 float
-configure.exe --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
-configure.exe --add-error-details 19 "Invalid memory free" INF 0.1 float
+robo_config.exe --add-error-details 1 "New memory leak modification" 1 0.2 float
+robo_config.exe --add-error-details 2 "Invalid accesses" INF 0.3 float
+robo_config.exe --add-error-details 3 "Use of unitialized variable" INF 0.2 float
+robo_config.exe --add-error-details 4 "Not closing file descriptors at the end of the program" INF 0.1 float
+robo_config.exe --add-error-details 5 "Data races" INF 0.1 float
+robo_config.exe --add-error-details 6 "Dead lock" INF 0.1 float
+robo_config.exe --add-error-details 7 "Unlock error" INF 0.1 float
+robo_config.exe --add-error-details 8 "Destroy" INF 0.1 float
+robo_config.exe --add-error-details 9 "Missusage of condition variables" INF 0.1 float
+robo_config.exe --add-error-details 10 "Hold lock" INF 0.1 float
+robo_config.exe --add-error-details 11 "Duplicate code in sources" INF 0.2 float
+robo_config.exe --add-error-details 12 "Use of non-static variables or functions in a single module" INF 0.1 float
+robo_config.exe --add-error-details 13 "Assignment from signed to unsigned" INF 0.1 float
+robo_config.exe --add-error-details 14 "Verification of return value for black listed function call is omited" INF 0.3 float
+robo_config.exe --add-error-details 15 "Function line count overlaps the maximum admited limit" INF 0.2 float
+robo_config.exe --add-error-details 16 "Indentation level overlaps the maximum admited limit" INF 0.2 float
+robo_config.exe --add-error-details 17 "Trailing whitespace at the end of lines" INF 0.2 float
+robo_config.exe --add-error-details 18 "Mixed tabs with spaces at the begining of each line" INF 0.2 float
+robo_config.exe --add-error-details 19 "Invalid memory free" INF 0.1 float
 
 :: drmemory
-configure.exe --create-tool drmemory .\modules\drmemory\libdrmemory.dll dynamic
-configure.exe --register-tool drmemory
-configure.exe --register-error 1 drmemory
-configure.exe --register-error 2 drmemory
-configure.exe --register-error 3 drmemory
-configure.exe --register-error 19 drmemory
+robo_config.exe --create-tool drmemory libdrmemory.dll dynamic
+robo_config.exe --register-tool drmemory
+robo_config.exe --register-error 1 drmemory
+robo_config.exe --register-error 2 drmemory
+robo_config.exe --register-error 3 drmemory
+robo_config.exe --register-error 19 drmemory
 
 :: splint
-configure.exe --create-tool splint .\modules\splint\libsplint.dll static
-configure.exe --register-tool splint
-configure.exe --register-parameter +boundswrite splint
-configure.exe --register-parameter +boundsread splint
-configure.exe --register-error 12 splint
-configure.exe --register-error 1 splint
-configure.exe --register-error 2 splint
-configure.exe --register-error 3 splint
-configure.exe --register-error 13 splint
+robo_config.exe --create-tool splint libsplint.dll static
+robo_config.exe --register-tool splint
+robo_config.exe --register-parameter +boundswrite splint
+robo_config.exe --register-parameter +boundsread splint
+robo_config.exe --register-error 12 splint
+robo_config.exe --register-error 1 splint
+robo_config.exe --register-error 2 splint
+robo_config.exe --register-error 3 splint
+robo_config.exe --register-error 13 splint
 
 :: simian
-configure.exe --create-tool simian .\modules\simian\libsimian.dll static
-configure.exe --register-tool simian
-configure.exe --register-parameter -language=C simian
-configure.exe --register-parameter -threshold=4 simian
-configure.exe --register-error 11 simian
+robo_config.exe --create-tool simian libsimian.dll static
+robo_config.exe --register-tool simian
+robo_config.exe --register-parameter -language=C simian
+robo_config.exe --register-parameter -threshold=4 simian
+robo_config.exe --register-error 11 simian
 
-configure.exe --set-executable .\tests\simple.exe
-configure.exe --add-static-parameter tests\simple.c
-configure.exe --set-penalty-info true libpenalty.dll
+
+robo_config.exe --set-executable tema0.exe
+call :config_static_files
+robo_config.exe --set-penalty-info true libpenalty.dll
+goto :eof
+
+:config_static_files
+for /f %%i in ('list_c_files.bat') do (
+	@robo_config.exe --add-static-parameter %%i
+	@echo %%i
+)
+goto :eof
+
+
