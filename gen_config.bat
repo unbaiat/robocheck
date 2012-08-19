@@ -89,7 +89,6 @@ goto :eof
 :config_static_files
 for /f %%i in ('list_c_files.bat') do (
 	@robo_config.exe --add-static-parameter %%i
-	@echo %%i
 )
 goto :eof
 
